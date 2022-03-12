@@ -23,11 +23,13 @@ input[type="reset"] {
 .sc-bdvvtL {
   height: 100%;
   width: 90vw;
+  z-index: 0;
 }
 
 .sc-dJjYzT {
   height: 100%;
   width: 90vw;
+  z-index: 0;
 }
 
 a {
@@ -54,29 +56,21 @@ a {
   padding: 5rem;
   padding-top: 0.5rem;
   padding-left: 1rem;
-  padding-right: 2rem;
+  padding-right: 0;
   background: #002b36;
 }
 
 .filename {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  color: #cccc;
-  align-self: flex-start;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
-  margin: 0;
-  padding-top: 0.5rem;
-  padding-left: 1rem;
-  padding-bottom: 1rem;
+  cursor: pointer;
 }
 
 .italic {
   font-style: italic;
 }
 
-.filename > span {
+.topBar > span {
   font-weight: 800;
   font-size: 1.4rem;
   margin-left: 0.4rem;
@@ -154,7 +148,7 @@ a {
 }
 
 .field {
-  margin-left: 5rem;
+  margin-left: 1rem;
 }
 
 body {
@@ -176,4 +170,64 @@ textarea {
 
   resize: none;
   white-space: pre-wrap;
+}
+
+.topBar {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  height: 10vh;
+  color: #cccc;
+}
+
+.sideBar {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: -11%;
+  right: 0vw;
+  height: 100vh;
+  width: 20vw;
+  background-color: #002b36;
+  border-left: 1px solid rgb(66, 74, 87);
+  transform: translateX(200%);
+  transition: transform 500ms;
+  z-index: 1;
+}
+
+.visible {
+  transform: translateX(0%);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(66, 74, 87);
+}
+
+.openSideBar {
+  margin-right: 3rem;
+  transition: transform 500ms;
+}
+
+.translateButton {
+  transform: translateX(-20vw);
+}
+
+.selected {
+  background-color: #003b49;
 }

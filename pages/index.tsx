@@ -1,7 +1,12 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "rich-markdown-editor";
 import editorTheme from "./editorTheme";
+import dynamic from "next/dynamic";
+
+const NavBar = dynamic(() => import("./NavBar"), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   const [text, setText] = useState(() => {
@@ -13,19 +18,37 @@ const Home: NextPage = () => {
     return textData;
   });
 
-  const [fileName, setFileName] = useState("file.md");
+  const [fileName, setFileName] = useState(() => {
+    let filename = "";
+    if (typeof window !== "undefined") {
+      filename = localStorage.getItem("currentFile") ?? "";
+    }
+    return filename;
+  });
 
+  // useReducer to make this global, here we only want to update it
   const [modified, setModified] = useState(false);
+
+  const [fileNameInput, setFileNameInput] = useState("");
+
+  const handleEditFilename = () => {
+    // ask for a newFileName through an inline input
+    let newFileName: string = fileName;
+    setFileName(newFileName);
+  };
+
+  const handleNewFile = () => {
+    // ask for a newFileName through an inline input
+    let newFileName: string = fileName;
+    setFileName(newFileName);
+    setText("");
+    localStorage.setItem(newFileName, text);
+    localStorage.setItem("currentFile", newFileName);
+  };
 
   return (
     <div className="container">
-      <div className="filename">
-        <div className="italic">{fileName}</div>
-        <span>{modified ? "•" : ""}</span>
-        <div className="spacer"></div>
-        <button className="editFileNameButton">✏️</button>
-        <button className="newFileButton">+</button>
-      </div>
+      <NavBar isModified={modified}></NavBar>
       <Editor
         theme={editorTheme}
         onChange={(value) => {
