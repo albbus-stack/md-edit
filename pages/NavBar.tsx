@@ -32,6 +32,9 @@ const NavBar: FC<Props> = ({ isModified }) => {
 
   const [isOpen, setOpen] = useState(false);
 
+  const [fileNameInput, setFileNameInput] = useState("");
+  const [fileNameInputValue, setFileNameInputValue] = useState("");
+
   const sideBarClass = "sideBar" + (isOpen ? " visible" : "");
   const hamButtonClass = "openSideBar" + (isOpen ? " translateButton" : "");
 
@@ -50,23 +53,64 @@ const NavBar: FC<Props> = ({ isModified }) => {
           ☰
         </button>
         <div className={sideBarClass}>
-          <div className="row">
-            <button
-              className="editFileNameButton"
-              onClick={() => {
-                // setFileNameInput("edit");
-              }}
-            >
-              ✏️
-            </button>
-            <button
-              className="newFileButton"
-              onClick={() => {
-                // setFileNameInput("new");
-              }}
-            >
-              +
-            </button>
+          <div className="row h-1">
+            {fileNameInput === "" ? (
+              <>
+                <button
+                  className="editFileNameButton"
+                  onClick={() => {
+                    setFileNameInput("edit");
+                    setFileNameInputValue(fileName);
+                  }}
+                >
+                  ✏️
+                </button>
+                <button
+                  className="newFileButton"
+                  onClick={() => {
+                    setFileNameInput("new");
+                  }}
+                >
+                  +
+                </button>
+              </>
+            ) : fileNameInput === "edit" ? (
+              <>
+                <input
+                  type="text"
+                  name="fileName"
+                  value={fileNameInputValue}
+                  onChange={(e) => {
+                    setFileNameInputValue(e.target.value);
+                  }}
+                />
+                <input
+                  type="button"
+                  value="✓"
+                  onClick={() => {
+                    // This setFilename requires a useReducer to re-render the editor on this change.
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <input
+                  type="text"
+                  name="fileName"
+                  value={fileNameInputValue}
+                  onChange={(e) => {
+                    setFileNameInputValue(e.target.value);
+                  }}
+                />
+                <input
+                  type="button"
+                  value="✓"
+                  onClick={() => {
+                    // This setFilename requires a useReducer to re-render the editor on this change.
+                  }}
+                />
+              </>
+            )}
           </div>
           {files.map((file) => {
             const divClass =
