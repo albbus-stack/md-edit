@@ -17,6 +17,7 @@ const Home: NextPage = () => {
     removeFile,
     renameFile,
     switchToFile,
+    modifyFile,
   } = useFilesContext();
 
   const [newText, setNewText] = useState("");
@@ -41,14 +42,6 @@ const Home: NextPage = () => {
     });
   }, [activeFile]);
 
-  const [fileName, setFileName] = useState(() => {
-    let filename = "";
-    if (typeof window !== "undefined") {
-      filename = localStorage.getItem("currentFile") ?? "";
-    }
-    return filename;
-  });
-
   const [modified, setModified] = useState(false);
 
   return (
@@ -64,8 +57,8 @@ const Home: NextPage = () => {
         defaultValue={text}
         autoFocus={true}
         onSave={() => {
-          localStorage.setItem(fileName, text);
-          localStorage.setItem("currentFile", fileName);
+          localStorage.setItem(activeFile, text);
+          modifyFile(activeFile, text);
           setModified(false);
         }}
         className="field"

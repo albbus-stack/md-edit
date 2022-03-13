@@ -5,6 +5,7 @@ enum Actions {
   REMOVE_FILE = "REMOVE_FILE",
   RENAME_FILE = "RENAME_FILE",
   SWITCH_TO_FILE = "SWITCH_TO_FILE",
+  MODIFY_FILE = "MODIFY_FILE",
 }
 
 interface Context {
@@ -14,6 +15,7 @@ interface Context {
   removeFile: (fileName: string) => void;
   renameFile: (fileName: string, newFileName: string) => void;
   switchToFile: (fileName: string) => void;
+  modifyFile: (fileName: string, content: string) => void;
 }
 
 interface State {
@@ -25,6 +27,7 @@ interface Action {
   type: Actions;
   fileName: string;
   newFileName?: string;
+  content?: string;
 }
 
 const initialState: State = {
@@ -96,6 +99,14 @@ const reducer = (state: State, action: Action): State => {
     case Actions.SWITCH_TO_FILE: {
       return { activeFile: action.fileName, files: state.files };
     }
+    case Actions.MODIFY_FILE: {
+      const updatedFileList = state.files.map((file) =>
+        file.fileName === action.fileName
+          ? { fileName: action.fileName, content: action.content }
+          : file
+      );
+      return { activeFile: state.activeFile, files: updatedFileList };
+    }
     default:
       return state;
   }
@@ -134,6 +145,9 @@ const FileProvider: React.FC = (props) => {
     },
     switchToFile: (fileName: string) => {
       dispatch({ type: Actions.SWITCH_TO_FILE, fileName });
+    },
+    modifyFile: (fileName: string, content: string) => {
+      dispatch({ type: Actions.MODIFY_FILE, fileName, content });
     },
   };
 
