@@ -1,34 +1,15 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
+import { FilesContext } from "./fileProvider";
 
 interface Props {
   isModified: boolean;
 }
 
 const NavBar: FC<Props> = ({ isModified }) => {
-  const [fileName, setFileName] = useState(() => {
-    let filename = "";
-    if (typeof window !== "undefined") {
-      filename = localStorage.getItem("currentFile") ?? "";
-    }
-    return filename;
-  });
+  const { activeFile, files, addNewFile, removeFile, renameFile } =
+    React.useContext(FilesContext);
 
-  const [files, setFiles] = useState(() => {
-    let files: any[] = [];
-    if (typeof window !== "undefined") {
-      let keys = Object.keys(localStorage);
-      let i = keys.length;
-      while (i--) {
-        if (keys[i].match(".+.md")) {
-          files.push({
-            name: keys[i],
-            value: localStorage.getItem(keys[i]),
-          });
-        }
-      }
-    }
-    return files;
-  });
+  console.log(files);
 
   const [isOpen, setOpen] = useState(false);
 
@@ -41,7 +22,7 @@ const NavBar: FC<Props> = ({ isModified }) => {
   return (
     <>
       <div className="topBar">
-        <div className="italic">{fileName}</div>
+        <div className="italic">{activeFile}</div>
         <span>{isModified ? "•" : ""}</span>
         <div className="spacer"></div>
         <button
@@ -60,7 +41,7 @@ const NavBar: FC<Props> = ({ isModified }) => {
                   className="editFileNameButton"
                   onClick={() => {
                     setFileNameInput("edit");
-                    setFileNameInputValue(fileName);
+                    setFileNameInputValue(activeFile ?? "");
                   }}
                 >
                   ✏️
@@ -112,18 +93,19 @@ const NavBar: FC<Props> = ({ isModified }) => {
               </>
             )}
           </div>
-          {files.map((file) => {
+          {files?.map((file) => {
             const divClass =
-              "row filename" + (file.name === fileName ? " selected" : "");
+              "row filename" +
+              (file.fileName === activeFile ? " selected" : "");
             return (
               <div
                 className={divClass}
-                key={file.name}
+                key={file.fileName}
                 onClick={() => {
                   // This setFilename requires a useReducer to re-render the editor on this change.
                 }}
               >
-                {file.name}
+                {file.fileName}
               </div>
             );
           })}
