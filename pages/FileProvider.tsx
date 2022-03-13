@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 
-const initialState = {
+enum Actions {
+  ADD_NEW_FILE = "ADD_NEW_FILE",
+  REMOVE_FILE = "REMOVE_FILE",
+  RENAME_FILE = "RENAME_FILE",
+  SWITCH_TO_FILE = "SWITCH_TO_FILE",
+}
+
+interface Context {
+  activeFile: string;
+  files: any[];
+  addNewFile: (fileName: string) => void;
+  removeFile: (fileName: string) => void;
+  renameFile: (fileName: string, newFileName: string) => void;
+  switchToFile: (fileName: string) => void;
+}
+
+interface State {
+  activeFile: string;
+  files: any[];
+}
+
+interface Action {
+  type: Actions;
+  fileName: string;
+  newFileName?: string;
+}
+
+const initialState: State = {
   activeFile: "",
   files: [{}],
 };
 
-function init(): any {
+function initializeState(): State {
   let files: any[] = [];
   let activeFile: any = "";
   if (typeof window !== "undefined") {
@@ -29,15 +56,9 @@ function init(): any {
   return initialState;
 }
 
-const actions = {
-  ADD_NEW_FILE: "ADD_NEW_FILE",
-  REMOVE_FILE: "REMOVE_FILE",
-  RENAME_FILE: "RENAME_FILE",
-};
-
-const reducer = (state: { activeFile: string; files: any[] }, action: any) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case actions.ADD_NEW_FILE:
+    case Actions.ADD_NEW_FILE:
       const fileName = action.fileName;
       localStorage.setItem(fileName, "");
       localStorage.setItem("currentFile", fileName);
@@ -51,49 +72,68 @@ const reducer = (state: { activeFile: string; files: any[] }, action: any) => {
           },
         ],
       };
-    case actions.REMOVE_FILE: {
+    case Actions.REMOVE_FILE: {
       const filteredFileList = state.files.filter(
         (file) => file.fileName !== action.fileName
       );
+      localStorage.removeItem(action.fileName);
       return { activeFile: state.activeFile, files: filteredFileList };
     }
-    case actions.RENAME_FILE: {
+    case Actions.RENAME_FILE: {
       const updatedFileList = state.files.map((file) =>
         file.fileName === action.fileName
           ? { fileName: action.newFileName, content: file.content }
           : file
       );
+      localStorage.setItem(
+        action.newFileName ?? "",
+        localStorage.getItem(action.fileName) ?? ""
+      );
+      localStorage.removeItem(action.fileName);
+      localStorage.setItem("currentFile", action.newFileName ?? "");
       return { activeFile: state.activeFile, files: updatedFileList };
+    }
+    case Actions.SWITCH_TO_FILE: {
+      return { activeFile: action.fileName, files: state.files };
     }
     default:
       return state;
   }
 };
 
-interface appContext {
-  activeFile?: string;
-  files?: any[];
-  addNewFile?: (fileName: string) => void;
-  removeFile?: (fileName: string) => void;
-  renameFile?: (fileName: string, newFileName: string) => void;
-}
+export const FilesContext = React.createContext<Context | undefined>(undefined);
 
-export const FilesContext = React.createContext<appContext>({});
+export const useFilesContext = (): Context => {
+  const context = useContext(FilesContext);
+  if (context === undefined) {
+    throw Error(
+      "useFilesContext must be used inside the FilesContext.Provider"
+    );
+  }
+  return context;
+};
 
 const FileProvider: React.FC = (props) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState, init);
+  const [state, dispatch] = React.useReducer(
+    reducer,
+    initialState,
+    initializeState
+  );
 
   const value = {
     activeFile: state.activeFile,
     files: state.files,
     addNewFile: (fileName: string) => {
-      dispatch({ type: actions.ADD_NEW_FILE, fileName });
+      dispatch({ type: Actions.ADD_NEW_FILE, fileName });
     },
     removeFile: (fileName: string) => {
-      dispatch({ type: actions.REMOVE_FILE, fileName });
+      dispatch({ type: Actions.REMOVE_FILE, fileName });
     },
     renameFile: (fileName: string, newFileName: string) => {
-      dispatch({ type: actions.RENAME_FILE, fileName, newFileName });
+      dispatch({ type: Actions.RENAME_FILE, fileName, newFileName });
+    },
+    switchToFile: (fileName: string) => {
+      dispatch({ type: Actions.SWITCH_TO_FILE, fileName });
     },
   };
 

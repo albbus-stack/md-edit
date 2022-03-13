@@ -1,15 +1,19 @@
 import React, { FC, useState } from "react";
-import { FilesContext } from "./fileProvider";
+import { useFilesContext } from "./fileProvider";
 
 interface Props {
   isModified: boolean;
 }
 
 const NavBar: FC<Props> = ({ isModified }) => {
-  const { activeFile, files, addNewFile, removeFile, renameFile } =
-    React.useContext(FilesContext);
-
-  console.log(files);
+  const {
+    activeFile,
+    files,
+    addNewFile,
+    removeFile,
+    renameFile,
+    switchToFile,
+  } = useFilesContext();
 
   const [isOpen, setOpen] = useState(false);
 
@@ -102,7 +106,7 @@ const NavBar: FC<Props> = ({ isModified }) => {
                 className={divClass}
                 key={file.fileName}
                 onClick={() => {
-                  // This setFilename requires a useReducer to re-render the editor on this change.
+                  switchToFile(file.fileName);
                 }}
               >
                 {file.fileName}
