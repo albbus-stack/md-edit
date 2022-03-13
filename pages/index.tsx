@@ -54,7 +54,6 @@ const Home: NextPage = () => {
           setModified(true);
         }}
         value={newText}
-        defaultValue={text}
         autoFocus={true}
         onSave={() => {
           localStorage.setItem(activeFile, text);

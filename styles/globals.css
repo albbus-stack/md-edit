@@ -236,7 +236,7 @@ textarea {
   height: 72px;
 }
 
-input[type="button"] {
+input[type="submit"] {
   background: none;
   color: inherit;
   border: none;

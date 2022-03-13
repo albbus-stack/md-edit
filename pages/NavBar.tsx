@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useFilesContext } from "./fileProvider";
 
 interface Props {
@@ -14,6 +14,20 @@ const NavBar: FC<Props> = ({ isModified }) => {
     renameFile,
     switchToFile,
   } = useFilesContext();
+
+  const keyBindingsFunction = useCallback((e) => {
+    if (e.key === "Escape") {
+      setFileNameInput("");
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", keyBindingsFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", keyBindingsFunction, false);
+    };
+  }, []);
 
   const [isOpen, setOpen] = useState(false);
 
@@ -60,7 +74,14 @@ const NavBar: FC<Props> = ({ isModified }) => {
                 </button>
               </>
             ) : fileNameInput === "edit" ? (
-              <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  renameFile(activeFile, fileNameInputValue);
+                  switchToFile(fileNameInputValue);
+                  setFileNameInput("");
+                }}
+              >
                 <input
                   type="text"
                   name="fileName"
@@ -69,16 +90,20 @@ const NavBar: FC<Props> = ({ isModified }) => {
                     setFileNameInputValue(e.target.value);
                   }}
                 />
-                <input
-                  type="button"
-                  value="✓"
-                  onClick={() => {
-                    // This setFilename requires a useReducer to re-render the editor on this change.
-                  }}
-                />
-              </>
+                <input type="submit" value="✓" />
+              </form>
             ) : (
-              <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const input = fileNameInputValue;
+                  addNewFile(input);
+                  switchToFile(input);
+                  localStorage.setItem(input, "gg");
+                  localStorage.setItem("currentFile", input);
+                  setFileNameInput("");
+                }}
+              >
                 <input
                   type="text"
                   name="fileName"
@@ -87,14 +112,8 @@ const NavBar: FC<Props> = ({ isModified }) => {
                     setFileNameInputValue(e.target.value);
                   }}
                 />
-                <input
-                  type="button"
-                  value="✓"
-                  onClick={() => {
-                    // This setFilename requires a useReducer to re-render the editor on this change.
-                  }}
-                />
-              </>
+                <input type="submit" value="✓" />
+              </form>
             )}
           </div>
           {files?.map((file) => {

@@ -40,7 +40,6 @@ function initializeState(): State {
   let activeFile: any = "";
   if (typeof window !== "undefined") {
     activeFile = localStorage.getItem("currentFile");
-    console.log(activeFile);
     let keys = Object.keys(localStorage);
     let i = keys.length;
     while (i--) {
@@ -63,15 +62,13 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case Actions.ADD_NEW_FILE:
       const fileName = action.fileName;
-      localStorage.setItem(fileName, "");
-      localStorage.setItem("currentFile", fileName);
       return {
         activeFile: fileName,
         files: [
           ...state.files,
           {
             fileName: fileName,
-            content: "",
+            content: "# " + fileName.toString(),
           },
         ],
       };
