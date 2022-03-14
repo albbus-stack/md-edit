@@ -17,35 +17,33 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
 
   const [isOpen, setOpen] = useState(false);
 
-  const keyBindingsFunction = useCallback(
-    (e) => {
-      if (e.key === "Escape") {
-        setFileNameInput("");
-      } else if (e.key === "." && e.ctrlKey === true) {
-        setOpen((prevState) => {
-          return !prevState;
-        });
-      } else if (e.key === "," && e.ctrlKey === true) {
-        let switchedFile = "";
-        let active = localStorage.getItem("currentFile");
-        let next = false;
-        files.map((file, index) => {
-          if (next) {
-            switchedFile = file.fileName;
-            next = false;
+  const keyBindingsFunction = (e: any) => {
+    if (e.key === "Escape") {
+      setFileNameInput("");
+    } else if (e.key === "." && e.ctrlKey === true) {
+      setOpen((prevState) => {
+        return !prevState;
+      });
+    } else if (e.key === "," && e.ctrlKey === true) {
+      let switchedFile = "";
+      let active = localStorage.getItem("currentFile");
+      let next = false;
+      files.map((file, index) => {
+        if (next) {
+          switchedFile = file.fileName;
+          next = false;
+        }
+        if (file.fileName === active) {
+          next = true;
+          if (index === files.length - 1) {
+            switchedFile = files[0].fileName;
           }
-          if (file.fileName === active) {
-            next = true;
-            if (index === files.length - 1) {
-              switchedFile = files[0].fileName;
-            }
-          }
-        });
-        switchToFile(switchedFile);
-      }
-    },
-    [isOpen, files, activeFile]
-  );
+        }
+        return file;
+      });
+      switchToFile(switchedFile);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("keydown", keyBindingsFunction, false);
@@ -53,7 +51,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
     return () => {
       document.removeEventListener("keydown", keyBindingsFunction, false);
     };
-  }, []);
+  }, [files, activeFile]);
 
   const [fileNameInput, setFileNameInput] = useState("");
   const [fileNameInputValue, setFileNameInputValue] = useState("");
