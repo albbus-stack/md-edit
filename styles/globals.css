@@ -24,6 +24,7 @@ input[type="reset"] {
   height: 100%;
   width: 90vw;
   z-index: 0;
+  margin-top: 1rem;
 }
 
 .sc-dJjYzT {
@@ -53,10 +54,7 @@ a {
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 5rem;
-  padding-top: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 0;
+  padding: 0;
   background: #002b36;
 }
 
@@ -67,6 +65,7 @@ a {
 }
 
 .italic {
+  padding-left: 2rem;
   font-style: italic;
 }
 
@@ -87,7 +86,6 @@ a {
   position: relative;
   padding: 0.5rem;
   font-size: 1rem;
-  place-self: end;
 }
 
 .editFileNameButton:hover::after {
@@ -182,12 +180,10 @@ textarea {
   font-size: 1.2rem;
   font-weight: 500;
   margin: 0;
-  padding-top: 0.5rem;
-  padding-left: 1rem;
-  padding-bottom: 1rem;
   width: 100%;
   height: 10vh;
   color: #cccc;
+  border-bottom: 1px solid rgb(66, 74, 87);
 }
 
 .sideBar {
@@ -274,4 +270,8 @@ input[type="text"] {
 
 #fileContainer:hover .deleteButton {
   visibility: visible;
+}
+
+.controls {
+  height: 9.9vh;
 }

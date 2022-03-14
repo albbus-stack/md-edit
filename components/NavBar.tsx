@@ -76,7 +76,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
           ☰
         </button>
         <div className={sideBarClass}>
-          <div className="row h-1">
+          <div className="row h-1 controls">
             {fileNameInput === "" ? (
               <>
                 <button
