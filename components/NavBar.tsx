@@ -18,14 +18,14 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
   const [isOpen, setOpen] = useState(false);
 
   const keyBindingsFunction = useCallback(
-    (e: any) => {
+    (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setFileNameInput("");
-      } else if (e.key === "." && e.ctrlKey === true) {
+      } else if (e.key === "." && e.ctrlKey) {
         setOpen((prevState) => {
           return !prevState;
         });
-      } else if (e.key === "," && e.ctrlKey === true) {
+      } else if (e.ctrlKey && e.key === ",") {
         let switchedFile = "";
         let next = false;
         files.map((file, index) => {
@@ -41,6 +41,26 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
           }
           return file;
         });
+        switchToFile(switchedFile);
+      } else if (e.ctrlKey && e.key === ";") {
+        let switchedFile = "";
+        let next = false;
+        files
+          .slice(0)
+          .reverse()
+          .map((file, index) => {
+            if (next) {
+              switchedFile = file.fileName;
+              next = false;
+            }
+            if (file.fileName === activeFile) {
+              next = true;
+              if (index === files.length - 1) {
+                switchedFile = files.slice(0).reverse()[0].fileName;
+              }
+            }
+            return file;
+          });
         switchToFile(switchedFile);
       }
     },
