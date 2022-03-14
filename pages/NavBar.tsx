@@ -1,11 +1,11 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFilesContext } from "./fileProvider";
 
 interface Props {
   isModified: boolean;
 }
 
-const NavBar: FC<Props> = ({ isModified }) => {
+const NavBar: React.FC<Props> = ({ isModified }) => {
   const {
     activeFile,
     files,
@@ -58,8 +58,8 @@ const NavBar: FC<Props> = ({ isModified }) => {
                 <button
                   className="editFileNameButton"
                   onClick={() => {
-                    setFileNameInput("edit");
                     setFileNameInputValue(activeFile ?? "");
+                    setFileNameInput("edit");
                   }}
                 >
                   ✏️
@@ -67,6 +67,7 @@ const NavBar: FC<Props> = ({ isModified }) => {
                 <button
                   className="newFileButton"
                   onClick={() => {
+                    setFileNameInputValue(".md");
                     setFileNameInput("new");
                   }}
                 >
@@ -99,8 +100,7 @@ const NavBar: FC<Props> = ({ isModified }) => {
                   const input = fileNameInputValue;
                   addNewFile(input);
                   switchToFile(input);
-                  localStorage.setItem(input, "gg");
-                  localStorage.setItem("currentFile", input);
+                  localStorage.setItem(input, "# " + input.toString());
                   setFileNameInput("");
                 }}
               >
@@ -129,6 +129,19 @@ const NavBar: FC<Props> = ({ isModified }) => {
                 }}
               >
                 {file.fileName}
+                <button
+                  key={file.fileName}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    switchToFile(
+                      files[files.length > 2 ? files.length - 2 : 0].fileName
+                    );
+                    removeFile(file.fileName);
+                    localStorage.removeItem(file.fileName);
+                  }}
+                >
+                  🗑
+                </button>
               </div>
             );
           })}

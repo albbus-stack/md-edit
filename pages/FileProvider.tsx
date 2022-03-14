@@ -1,26 +1,16 @@
 import React, { useContext } from "react";
 
+interface File {
+  fileName: string;
+  content: string;
+}
+
 enum Actions {
   ADD_NEW_FILE = "ADD_NEW_FILE",
   REMOVE_FILE = "REMOVE_FILE",
   RENAME_FILE = "RENAME_FILE",
   SWITCH_TO_FILE = "SWITCH_TO_FILE",
   MODIFY_FILE = "MODIFY_FILE",
-}
-
-interface Context {
-  activeFile: string;
-  files: any[];
-  addNewFile: (fileName: string) => void;
-  removeFile: (fileName: string) => void;
-  renameFile: (fileName: string, newFileName: string) => void;
-  switchToFile: (fileName: string) => void;
-  modifyFile: (fileName: string, content: string) => void;
-}
-
-interface State {
-  activeFile: string;
-  files: any[];
 }
 
 interface Action {
@@ -30,23 +20,38 @@ interface Action {
   content?: string;
 }
 
+interface Context {
+  activeFile: string;
+  files: File[];
+  addNewFile: (fileName: string) => void;
+  removeFile: (fileName: string) => void;
+  renameFile: (fileName: string, newFileName: string) => void;
+  switchToFile: (fileName: string) => void;
+  modifyFile: (fileName: string, content: string) => void;
+}
+
+interface State {
+  activeFile: string;
+  files: File[];
+}
+
 const initialState: State = {
   activeFile: "",
-  files: [{}],
+  files: [{ fileName: "", content: "" } as File],
 };
 
 function initializeState(): State {
-  let files: any[] = [];
-  let activeFile: any = "";
+  let files: File[] = [];
+  let activeFile: string = "";
   if (typeof window !== "undefined") {
-    activeFile = localStorage.getItem("currentFile");
+    activeFile = localStorage.getItem("currentFile") ?? "";
     let keys = Object.keys(localStorage);
     let i = keys.length;
     while (i--) {
       if (keys[i].match(".+.md")) {
         files.push({
           fileName: keys[i],
-          content: localStorage.getItem(keys[i]),
+          content: localStorage.getItem(keys[i]) ?? "",
         });
       }
     }
@@ -82,7 +87,7 @@ const reducer = (state: State, action: Action): State => {
     case Actions.RENAME_FILE: {
       const updatedFileList = state.files.map((file) =>
         file.fileName === action.fileName
-          ? { fileName: action.newFileName, content: file.content }
+          ? ({ fileName: action.newFileName, content: file.content } as File)
           : file
       );
       localStorage.setItem(
@@ -99,7 +104,7 @@ const reducer = (state: State, action: Action): State => {
     case Actions.MODIFY_FILE: {
       const updatedFileList = state.files.map((file) =>
         file.fileName === action.fileName
-          ? { fileName: action.fileName, content: action.content }
+          ? ({ fileName: action.fileName, content: action.content } as File)
           : file
       );
       return { activeFile: state.activeFile, files: updatedFileList };
