@@ -110,6 +110,9 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
                   type="text"
                   name="fileName"
                   value={fileNameInputValue}
+                  onFocus={(e) => {
+                    e.target.selectionEnd = e.target.selectionStart = 0;
+                  }}
                   onChange={(e) => {
                     setFileNameInputValue(e.target.value);
                   }}
@@ -124,6 +127,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
               (file.fileName === activeFile ? " selected" : "");
             return (
               <div
+                id="fileContainer"
                 className={divClass}
                 key={file.fileName}
                 onClick={() => {
@@ -136,10 +140,10 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
                   key={file.fileName}
                   onClick={(e) => {
                     e.stopPropagation();
+                    removeFile(file.fileName);
                     switchToFile(
                       files[files.length > 2 ? files.length - 2 : 0].fileName
                     );
-                    removeFile(file.fileName);
                     localStorage.removeItem(file.fileName);
                   }}
                 >

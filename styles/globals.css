@@ -250,10 +250,15 @@ input[type="submit"] {
 }
 
 .deleteButton {
+  visibility: hidden;
   position: absolute;
   right: 1.5rem;
 }
 
 .relative {
   position: relative;
+}
+
+#fileContainer:hover .deleteButton {
+  visibility: visible;
 }
