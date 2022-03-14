@@ -26,15 +26,15 @@ const NavBar: React.FC = () => {
       } else if (e.ctrlKey && e.key === ",") {
         let switchedFile = "";
         let next = false;
-        files.map((file, index) => {
+        tabbedFiles.map((file, index) => {
           if (next) {
             switchedFile = file.fileName;
             next = false;
           }
           if (file.fileName === activeFile) {
             next = true;
-            if (index === files.length - 1) {
-              switchedFile = files[0].fileName;
+            if (index === tabbedFiles.length - 1) {
+              switchedFile = tabbedFiles[0].fileName;
             }
           }
           return file;
@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
       } else if (e.ctrlKey && e.key === ";") {
         let switchedFile = "";
         let next = false;
-        files
+        tabbedFiles
           .slice(0)
           .reverse()
           .map((file, index) => {
@@ -53,8 +53,8 @@ const NavBar: React.FC = () => {
             }
             if (file.fileName === activeFile) {
               next = true;
-              if (index === files.length - 1) {
-                switchedFile = files.slice(0).reverse()[0].fileName;
+              if (index === tabbedFiles.length - 1) {
+                switchedFile = tabbedFiles.slice(0).reverse()[0].fileName;
               }
             }
             return file;
@@ -198,15 +198,25 @@ const NavBar: React.FC = () => {
                   key={file.fileName}
                   onClick={(e) => {
                     e.stopPropagation();
-                    addToTabs(file.fileName);
-                    // removeFile(file.fileName);
-                    // switchToFile(
-                    //   files[files.length > 2 ? files.length - 2 : 0].fileName
-                    // );
-                    // localStorage.removeItem(file.fileName);
+                    removeFile(file.fileName);
+                    switchToFile(
+                      files[files.length > 2 ? files.length - 2 : 0].fileName
+                    );
+                    localStorage.removeItem(file.fileName);
                   }}
                 >
                   🗑
+                </button>
+                <button
+                  className="addToTabButton"
+                  key={file.fileName + "addTab"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToTabs(file.fileName);
+                    switchToFile(file.fileName);
+                  }}
+                >
+                  +
                 </button>
               </div>
             );

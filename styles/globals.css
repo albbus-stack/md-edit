@@ -67,20 +67,26 @@ a {
 .tab {
   margin-left: 1rem;
   margin-top: 0.3rem;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.4rem;
   padding-top: 0.1rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  font-style: italic;
   display: flex;
+  font-style: italic;
   position: relative;
   align-self: flex-end;
   border: 1px solid rgb(66, 74, 87);
   border-bottom: 0;
+  color: rgba(168, 167, 167, 0.664);
 }
 
 .firstTab {
   margin-left: 2rem;
+}
+
+.activeTab {
+  font-style: italic;
+  color: #cccc;
 }
 
 .activeTab::after {
@@ -276,17 +282,24 @@ input[type="text"] {
   width: 80%;
 }
 
-.deleteButton {
+.deleteButton,
+.addToTabButton {
   visibility: hidden;
   position: absolute;
-  right: 1.5rem;
+  right: 2.3rem;
+}
+
+.addToTabButton {
+  font-weight: 700;
+  right: 1rem;
 }
 
 .relative {
   position: relative;
 }
 
-#fileContainer:hover .deleteButton {
+#fileContainer:hover .deleteButton,
+#fileContainer:hover .addToTabButton {
   visibility: visible;
 }
 

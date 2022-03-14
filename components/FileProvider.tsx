@@ -104,11 +104,14 @@ const reducer = (state: State, action: Action): State => {
       const filteredFileList = state.files.filter(
         (file) => file.fileName !== action.fileName
       );
+      const filteredTabbedFileList = state.tabbedFiles.filter(
+        (file) => file.fileName !== action.fileName
+      );
       localStorage.removeItem(action.fileName);
       return {
         activeFile: state.activeFile,
         files: filteredFileList,
-        tabbedFiles: state.tabbedFiles,
+        tabbedFiles: filteredTabbedFileList,
       };
     }
     case Actions.RENAME_FILE: {
@@ -155,12 +158,6 @@ const reducer = (state: State, action: Action): State => {
           newTabFile = file;
         }
       }
-      console.log(newTabFile);
-      console.log({
-        activeFile: state.activeFile,
-        files: state.files,
-        tabbedFiles: [...state.tabbedFiles, newTabFile],
-      });
       return {
         activeFile: state.activeFile,
         files: state.files,
