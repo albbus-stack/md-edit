@@ -64,27 +64,45 @@ a {
   cursor: pointer;
 }
 
-.italic {
-  padding-left: 2rem;
+.tab {
+  margin-left: 1rem;
+  margin-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-top: 0.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   font-style: italic;
+  display: flex;
+  position: relative;
+  align-self: flex-end;
+  border: 1px solid rgb(66, 74, 87);
+  border-bottom: 0;
 }
 
-.topBar > span {
-  font-weight: 800;
-  font-size: 1.4rem;
-  margin-left: 0.4rem;
+.firstTab {
+  margin-left: 2rem;
+}
+
+.activeTab::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  bottom: -5%;
+  left: 0;
+  background-color: #002b36;
 }
 
 .newFileButton {
   position: relative;
-  padding: 0.5rem;
+  padding: 0.6rem;
   font-size: 1.25rem;
   font-weight: 600;
 }
 
 .editFileNameButton {
   position: relative;
-  padding: 0.5rem;
+  padding: 0.6rem;
   font-size: 1rem;
 }
 
@@ -181,7 +199,7 @@ textarea {
   font-weight: 500;
   margin: 0;
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   color: #cccc;
   border-bottom: 1px solid rgb(66, 74, 87);
 }
@@ -274,4 +292,5 @@ input[type="text"] {
 
 .controls {
   height: 9.9vh;
+  padding: 0;
 }

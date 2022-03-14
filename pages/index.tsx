@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Editor from "rich-markdown-editor";
 import editorTheme from "../lib/editorTheme";
 import dynamic from "next/dynamic";
-import { useFilesContext } from "../lib/FileProvider";
+import { useFilesContext } from "../components/FileProvider";
 
 const NavBar = dynamic(() => import("../components/NavBar"), {
   ssr: false,
@@ -42,23 +42,21 @@ const Home: NextPage = () => {
     });
   }, [activeFile]);
 
-  const [modified, setModified] = useState(false);
-
   return (
     <div className="container">
-      <NavBar isModified={modified}></NavBar>
+      <NavBar></NavBar>
       <Editor
         theme={editorTheme}
         onChange={(value) => {
           setText(value);
-          setModified(true);
+          localStorage.setItem(activeFile, text);
+          modifyFile(activeFile, text);
         }}
         value={newText}
         autoFocus={true}
         onSave={() => {
           localStorage.setItem(activeFile, text);
           modifyFile(activeFile, text);
-          setModified(false);
         }}
         className="field"
       />

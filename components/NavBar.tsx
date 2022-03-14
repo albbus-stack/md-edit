@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useFilesContext } from "../lib/FileProvider";
+import { useFilesContext } from "./FileProvider";
 
-interface Props {
-  isModified: boolean;
-}
-
-const NavBar: React.FC<Props> = ({ isModified }) => {
+const NavBar: React.FC = () => {
   const {
     activeFile,
     files,
+    tabbedFiles,
     addNewFile,
     removeFile,
     renameFile,
     switchToFile,
+    addToTabs,
   } = useFilesContext();
 
   const [isOpen, setOpen] = useState(false);
@@ -84,8 +82,24 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
   return (
     <>
       <div className="topBar">
-        <div className="italic">{activeFile}</div>
-        <span>{isModified ? "•" : ""}</span>
+        {tabbedFiles?.map((file, index) => {
+          const divClass =
+            "tab " +
+            (file.fileName === activeFile ? " activeTab" : "") +
+            (index === 0 ? " firstTab" : "");
+          return (
+            <div
+              id="fileContainer"
+              className={divClass}
+              key={file.fileName + "tab"}
+              onClick={() => {
+                switchToFile(file.fileName);
+              }}
+            >
+              {file.fileName}
+            </div>
+          );
+        })}
         <div className="spacer"></div>
         <button
           className={hamButtonClass}
@@ -184,11 +198,12 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
                   key={file.fileName}
                   onClick={(e) => {
                     e.stopPropagation();
-                    removeFile(file.fileName);
-                    switchToFile(
-                      files[files.length > 2 ? files.length - 2 : 0].fileName
-                    );
-                    localStorage.removeItem(file.fileName);
+                    addToTabs(file.fileName);
+                    // removeFile(file.fileName);
+                    // switchToFile(
+                    //   files[files.length > 2 ? files.length - 2 : 0].fileName
+                    // );
+                    // localStorage.removeItem(file.fileName);
                   }}
                 >
                   🗑

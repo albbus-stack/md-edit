@@ -20,6 +20,18 @@ A simple browser markdown editor that persists in your local storage.
 
 3. Run `npm install` in your terminal.
 
-4. Run `npm run dev` and open http://localhost:3000/.
+4. Run `npm run dev` and open <http://localhost:3000/>.
 
 5. Enjoy.  :octocat:
+
+## TODOS
+
+* Add a theme manager.
+
+* Add tabs: multiple open files, buffer save them to make for easier editing (maybe remove saving altogether? YES).
+
+* Separate NavBar component, use Modules for Css.
+
+* Test long text scrolling, sticky Sidebar.
+
+* Command palette.
