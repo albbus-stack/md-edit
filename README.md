@@ -3,7 +3,7 @@
 [![Next.js](https://img.shields.io/static/v1?label=&message=Next.js&color=red&style=flat-square&logo=next.js&logoColor=white&logoWidth=15&labelColor=&link=)](https://github.com/pallets/flask)
 [![Typescript](https://img.shields.io/static/v1?label=&message=Typescript&color=blue&style=flat-square&logo=typescript&logoColor=white&logoWidth=15&labelColor=&link=)](https://github.com/pallets/flask)
 
-A simple browser markdown editor that persists in local storage.
+A simple browser markdown editor that persists in your local storage.
 
 ## Build it
 
