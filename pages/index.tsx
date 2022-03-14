@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "rich-markdown-editor";
-import editorTheme from "./editorTheme";
+import editorTheme from "../lib/editorTheme";
 import dynamic from "next/dynamic";
-import { useFilesContext } from "./FileProvider";
+import { useFilesContext } from "../lib/FileProvider";
 
-const NavBar = dynamic(() => import("./NavBar"), {
+const NavBar = dynamic(() => import("../components/NavBar"), {
   ssr: false,
 });
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useFilesContext } from "./FileProvider";
+import { useFilesContext } from "../lib/FileProvider";
 
 interface Props {
   isModified: boolean;
