@@ -17,33 +17,35 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
 
   const [isOpen, setOpen] = useState(false);
 
-  const keyBindingsFunction = (e: any) => {
-    if (e.key === "Escape") {
-      setFileNameInput("");
-    } else if (e.key === "." && e.ctrlKey === true) {
-      setOpen((prevState) => {
-        return !prevState;
-      });
-    } else if (e.key === "," && e.ctrlKey === true) {
-      let switchedFile = "";
-      let active = localStorage.getItem("currentFile");
-      let next = false;
-      files.map((file, index) => {
-        if (next) {
-          switchedFile = file.fileName;
-          next = false;
-        }
-        if (file.fileName === active) {
-          next = true;
-          if (index === files.length - 1) {
-            switchedFile = files[0].fileName;
+  const keyBindingsFunction = useCallback(
+    (e: any) => {
+      if (e.key === "Escape") {
+        setFileNameInput("");
+      } else if (e.key === "." && e.ctrlKey === true) {
+        setOpen((prevState) => {
+          return !prevState;
+        });
+      } else if (e.key === "," && e.ctrlKey === true) {
+        let switchedFile = "";
+        let next = false;
+        files.map((file, index) => {
+          if (next) {
+            switchedFile = file.fileName;
+            next = false;
           }
-        }
-        return file;
-      });
-      switchToFile(switchedFile);
-    }
-  };
+          if (file.fileName === activeFile) {
+            next = true;
+            if (index === files.length - 1) {
+              switchedFile = files[0].fileName;
+            }
+          }
+          return file;
+        });
+        switchToFile(switchedFile);
+      }
+    },
+    [files, activeFile]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", keyBindingsFunction, false);
