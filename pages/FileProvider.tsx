@@ -45,6 +45,14 @@ function initializeState(): State {
   let activeFile: string = "";
   if (typeof window !== "undefined") {
     activeFile = localStorage.getItem("currentFile") ?? "";
+    if (activeFile === "") {
+      files.push({
+        fileName: "new.md",
+        content: "# New",
+      } as File);
+      localStorage.setItem("currentFile", "new.md");
+      localStorage.setItem("new.md", "# New");
+    }
     let keys = Object.keys(localStorage);
     let i = keys.length;
     while (i--) {
@@ -52,7 +60,7 @@ function initializeState(): State {
         files.push({
           fileName: keys[i],
           content: localStorage.getItem(keys[i]) ?? "",
-        });
+        } as File);
       }
     }
   }

@@ -102,6 +102,7 @@ a {
   transform: translateX(50%);
   border-radius: 3px;
   background: white;
+  z-index: 2;
 }
 
 .editFileNameButton:hover::before {
@@ -129,6 +130,7 @@ a {
   transform: translateX(50%);
   border-radius: 3px;
   background: white;
+  z-index: 2;
 }
 
 .newFileButton:hover::before {
@@ -245,4 +247,13 @@ input[type="submit"] {
   cursor: pointer;
   outline: inherit;
   padding-left: 0.5rem;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 1.5rem;
+}
+
+.relative {
+  position: relative;
 }

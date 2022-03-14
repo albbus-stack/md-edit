@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useFilesContext } from "./fileProvider";
+import { useFilesContext } from "./FileProvider";
 
 interface Props {
   isModified: boolean;
@@ -84,6 +84,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
                 }}
               >
                 <input
+                  autoFocus
                   type="text"
                   name="fileName"
                   value={fileNameInputValue}
@@ -105,6 +106,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
                 }}
               >
                 <input
+                  autoFocus
                   type="text"
                   name="fileName"
                   value={fileNameInputValue}
@@ -118,7 +120,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
           </div>
           {files?.map((file) => {
             const divClass =
-              "row filename" +
+              "row filename relative" +
               (file.fileName === activeFile ? " selected" : "");
             return (
               <div
@@ -130,6 +132,7 @@ const NavBar: React.FC<Props> = ({ isModified }) => {
               >
                 {file.fileName}
                 <button
+                  className="deleteButton"
                   key={file.fileName}
                   onClick={(e) => {
                     e.stopPropagation();

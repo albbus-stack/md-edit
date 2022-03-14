@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import FileProvider from "./fileProvider";
+import FileProvider from "./FileProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Editor from "rich-markdown-editor";
 import editorTheme from "./editorTheme";
 import dynamic from "next/dynamic";
-import { useFilesContext } from "./fileProvider";
+import { useFilesContext } from "./FileProvider";
 
 const NavBar = dynamic(() => import("./NavBar"), {
   ssr: false,
