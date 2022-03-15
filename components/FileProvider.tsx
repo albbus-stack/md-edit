@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import { stat } from "fs";
+import React, { useContext, useReducer } from "react";
 
 interface File {
   fileName: string;
@@ -33,6 +34,7 @@ interface Context {
   switchToFile: (fileName: string) => void;
   modifyFile: (fileName: string, content: string) => void;
   addToTabs: (fileName: string) => void;
+  removeFromTabs: (fileName: string) => void;
 }
 
 interface State {
@@ -69,13 +71,18 @@ function initializeState(): State {
           fileName: keys[i],
           content: localStorage.getItem(keys[i]) ?? "",
         } as File);
-        if (activeFile === keys[i]) {
-          tabbedFiles.push({
-            fileName: keys[i],
-            content: localStorage.getItem(keys[i]) ?? "",
-          } as File);
-        }
       }
+    }
+    const tabbedFilesString: string = (activeFile =
+      localStorage.getItem("tabbedFiles") ?? "");
+    const tabbedFilesSplit = tabbedFilesString
+      .split(" ")
+      .filter((file) => file !== "");
+    for (let file of tabbedFilesSplit) {
+      tabbedFiles.push({
+        fileName: file,
+        content: localStorage.getItem(file) ?? "",
+      } as File);
     }
   }
 
@@ -87,8 +94,8 @@ function initializeState(): State {
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case Actions.ADD_NEW_FILE:
-      const fileName = action.fileName;
+    case Actions.ADD_NEW_FILE: {
+      const fileName: string = action.fileName;
       return {
         activeFile: fileName,
         files: [
@@ -100,11 +107,13 @@ const reducer = (state: State, action: Action): State => {
         ],
         tabbedFiles: state.tabbedFiles,
       };
+    }
+
     case Actions.REMOVE_FILE: {
-      const filteredFileList = state.files.filter(
+      const filteredFileList: File[] = state.files.filter(
         (file) => file.fileName !== action.fileName
       );
-      const filteredTabbedFileList = state.tabbedFiles.filter(
+      const filteredTabbedFileList: File[] = state.tabbedFiles.filter(
         (file) => file.fileName !== action.fileName
       );
       localStorage.removeItem(action.fileName);
@@ -114,8 +123,9 @@ const reducer = (state: State, action: Action): State => {
         tabbedFiles: filteredTabbedFileList,
       };
     }
+
     case Actions.RENAME_FILE: {
-      const updatedFileList = state.files.map((file) =>
+      const updatedFileList: File[] = state.files.map((file) =>
         file.fileName === action.fileName
           ? ({ fileName: action.newFileName, content: file.content } as File)
           : file
@@ -132,6 +142,7 @@ const reducer = (state: State, action: Action): State => {
         tabbedFiles: state.tabbedFiles,
       };
     }
+
     case Actions.SWITCH_TO_FILE: {
       return {
         activeFile: action.fileName,
@@ -139,8 +150,9 @@ const reducer = (state: State, action: Action): State => {
         tabbedFiles: state.tabbedFiles,
       };
     }
+
     case Actions.MODIFY_FILE: {
-      const updatedFileList = state.files.map((file) =>
+      const updatedFileList: File[] = state.files.map((file) =>
         file.fileName === action.fileName
           ? ({ fileName: action.fileName, content: action.content } as File)
           : file
@@ -151,28 +163,45 @@ const reducer = (state: State, action: Action): State => {
         tabbedFiles: state.tabbedFiles,
       };
     }
+
     case Actions.ADD_TO_TABS: {
-      let newTabFile = {} as File;
-      for (let file of state.files) {
-        if (file.fileName === action.fileName) {
-          newTabFile = file;
+      let tabbedFilesList = state.tabbedFiles;
+      let isAlreadyTabbed: boolean = false;
+      state.tabbedFiles.forEach((file) => {
+        if (file.fileName === action.fileName) isAlreadyTabbed = true;
+      });
+      if (!isAlreadyTabbed) {
+        for (let file of state.files) {
+          if (file.fileName === action.fileName) {
+            tabbedFilesList.push(file);
+          }
         }
+        let tabbedFilesString: string =
+          localStorage.getItem("tabbedFiles") ?? "";
+        tabbedFilesString += " " + action.fileName;
+        localStorage.setItem("tabbedFiles", tabbedFilesString);
       }
       return {
         activeFile: state.activeFile,
         files: state.files,
-        tabbedFiles: [...state.tabbedFiles, newTabFile],
+        tabbedFiles: tabbedFilesList,
       };
     }
+
     case Actions.REMOVE_FROM_TABS: {
-      const filteredFileList = state.files.filter(
+      const filteredTabbedFileList: File[] = state.tabbedFiles.filter(
         (file) => file.fileName !== action.fileName
       );
-      localStorage.removeItem(action.fileName);
+      let tabbedFiles: string = localStorage.getItem("tabbedFiles") ?? "";
+      let splitTabbedFiles: string[] = tabbedFiles
+        .split(" ")
+        .filter((file) => file !== action.fileName);
+      tabbedFiles = splitTabbedFiles.join(" ");
+      localStorage.setItem("tabbedFiles", tabbedFiles);
       return {
         activeFile: state.activeFile,
-        files: filteredFileList,
-        tabbedFiles: state.tabbedFiles,
+        files: state.files,
+        tabbedFiles: filteredTabbedFileList,
       };
     }
     default:
@@ -193,11 +222,7 @@ export const useFilesContext = (): Context => {
 };
 
 const FileProvider: React.FC = (props) => {
-  const [state, dispatch] = React.useReducer(
-    reducer,
-    initialState,
-    initializeState
-  );
+  const [state, dispatch] = useReducer(reducer, initialState, initializeState);
 
   const value = {
     activeFile: state.activeFile,
@@ -220,6 +245,9 @@ const FileProvider: React.FC = (props) => {
     },
     addToTabs: (fileName: string) => {
       dispatch({ type: Actions.ADD_TO_TABS, fileName });
+    },
+    removeFromTabs: (fileName: string) => {
+      dispatch({ type: Actions.REMOVE_FROM_TABS, fileName });
     },
   };
 

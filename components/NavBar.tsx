@@ -12,6 +12,7 @@ const NavBar: React.FC = () => {
     renameFile,
     switchToFile,
     addToTabs,
+    removeFromTabs,
   } = useFilesContext();
 
   const [isOpen, setOpen] = useState(false);
@@ -92,6 +93,27 @@ const NavBar: React.FC = () => {
               }}
             >
               {file.fileName}
+              <button
+                className="removeFromTabsButton"
+                key={file.fileName + "removeFromTabs"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeFromTabs(file.fileName);
+                  if (file.fileName === activeFile) {
+                    let switchIndex: number = tabbedFiles.length - 1;
+                    for (let i = 0; i < tabbedFiles.length; i++) {
+                      if (
+                        tabbedFiles[i].fileName === file.fileName &&
+                        i === tabbedFiles.length - 1
+                      )
+                        switchIndex = tabbedFiles.length - 2;
+                    }
+                    switchToFile(tabbedFiles[switchIndex].fileName);
+                  }
+                }}
+              >
+                &#10005;
+              </button>
             </div>
           );
         })}

@@ -118,13 +118,14 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
               className={divClass}
               key={file.fileName}
               onClick={() => {
+                addToTabs(file.fileName);
                 switchToFile(file.fileName);
               }}
             >
               {file.fileName}
               <button
                 className="deleteButton"
-                key={file.fileName}
+                key={file.fileName + "delete"}
                 onClick={(e) => {
                   e.stopPropagation();
                   removeFile(file.fileName);
@@ -135,17 +136,6 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
                 }}
               >
                 🗑
-              </button>
-              <button
-                className="addToTabButton"
-                key={file.fileName + "addTab"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToTabs(file.fileName);
-                  switchToFile(file.fileName);
-                }}
-              >
-                +
               </button>
             </div>
           );

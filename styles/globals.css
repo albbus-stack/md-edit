@@ -65,7 +65,7 @@ a {
 }
 
 .tab {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   margin-top: 0.3rem;
   padding-bottom: 0.4rem;
   padding-top: 0.1rem;
@@ -190,7 +190,7 @@ a {
 }
 
 .sideBar {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,7 +221,7 @@ a {
 }
 
 .openSideBar {
-  margin-right: 3rem;
+  margin-right: 2rem;
   transition: transform 500ms;
 }
 
@@ -261,16 +261,10 @@ input[type="text"] {
   width: 80%;
 }
 
-.deleteButton,
-.addToTabButton {
+.deleteButton {
   visibility: hidden;
   position: absolute;
-  right: 2.3rem;
-}
-
-.addToTabButton {
-  font-weight: 700;
-  right: 1rem;
+  right: 1.5rem;
 }
 
 .relative {
@@ -283,6 +277,13 @@ input[type="text"] {
 }
 
 .controls {
-  height: 9.9vh;
+  height: 7vh;
   padding: 0;
+}
+
+.removeFromTabsButton {
+  font-style: normal;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  margin-left: 0.5rem;
 }
