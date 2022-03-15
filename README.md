@@ -30,6 +30,4 @@ A simple browser markdown editor that persists in your local storage.
 
 * Use Modules for Css.
 
-* Test long text scrolling, sticky Sidebar.
-
 * Command palette.
