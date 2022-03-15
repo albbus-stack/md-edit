@@ -28,9 +28,7 @@ A simple browser markdown editor that persists in your local storage.
 
 * Add a theme manager.
 
-* Add tabs: multiple open files, buffer save them to make for easier editing (maybe remove saving altogether? YES).
-
-* Separate NavBar component, use Modules for Css.
+* Use Modules for Css.
 
 * Test long text scrolling, sticky Sidebar.
 
