@@ -16,13 +16,13 @@ A simple browser markdown editor that persists in your local storage.
 
 1. Pull this repository.
 
-2. Cd into `md-edit` where the `package.json` is located.
+1. Cd into `md-edit` where the `package.json` is located.
 
-3. Run `npm install` in your terminal.
+1. Run `npm install` in your terminal.
 
-4. Run `npm run dev` and open <http://localhost:3000/>.
+1. Run `npm run dev` and open <http://localhost:3000/>.
 
-5. Enjoy.  :octocat:
+1. Enjoy.  :octocat:
 
 ## TODOS
 
