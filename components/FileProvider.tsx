@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import React, { useContext, useReducer } from "react";
 
 interface File {
@@ -117,7 +116,10 @@ const reducer = (state: State, action: Action): State => {
       );
       localStorage.removeItem(action.fileName);
       return {
-        activeFile: state.activeFile,
+        activeFile:
+          action.fileName === state.activeFile
+            ? filteredTabbedFileList[0].fileName
+            : state.activeFile,
         files: filteredFileList,
         tabbedFiles: filteredTabbedFileList,
       };
@@ -179,7 +181,7 @@ const reducer = (state: State, action: Action): State => {
         let tabbedFilesString: string =
           localStorage.getItem("tabbedFiles") ?? "";
         tabbedFilesString += " " + action.fileName;
-        localStorage.setItem("tabbedFiles", tabbedFilesString);
+        localStorage.setItem("tabbedFiles", tabbedFilesString.trimStart());
       }
       return {
         activeFile: state.activeFile,

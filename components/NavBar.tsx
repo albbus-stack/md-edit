@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
 import SideBar from "./SideBar";
 
@@ -15,15 +16,9 @@ const NavBar: React.FC = () => {
     removeFromTabs,
   } = useFilesContext();
 
-  const [isOpen, setOpen] = useState(false);
-
   const keyBindingsFunction = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "." && e.ctrlKey) {
-        setOpen((prevState) => {
-          return !prevState;
-        });
-      } else if (e.ctrlKey && e.key === ",") {
+      if (e.ctrlKey && e.key === ",") {
         let switchedFile = "";
         let next = false;
         tabbedFiles.map((file, index) => {
@@ -73,8 +68,6 @@ const NavBar: React.FC = () => {
     };
   }, [files, tabbedFiles, activeFile]);
 
-  const hamButtonClass = "openSideBar" + (isOpen ? " translateButton" : "");
-
   return (
     <>
       <div className="topBar">
@@ -118,15 +111,7 @@ const NavBar: React.FC = () => {
           );
         })}
         <div className="spacer"></div>
-        <button
-          className={hamButtonClass}
-          onClick={() => {
-            setOpen(!isOpen);
-          }}
-        >
-          ☰
-        </button>
-        <SideBar isOpen={isOpen} />
+        <SideBar />
       </div>
     </>
   );

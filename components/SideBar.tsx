@@ -1,12 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { CSSProperties, useCallback, useEffect, useState } from "react";
 import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
 
-interface Props {
-  isOpen: boolean;
-}
-
-const SideBar: React.FC<Props> = ({ isOpen }) => {
+const SideBar: React.FC = () => {
   const {
     activeFile,
     files,
@@ -20,8 +16,14 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
 
   const { width, enableResize } = useResize({ minWidth: 200 });
 
+  const [isOpen, setOpen] = useState(false);
+
   const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === "." && e.ctrlKey) {
+      setOpen((prevState) => {
+        return !prevState;
+      });
+    } else if (e.key === "Escape") {
       setFileNameInput("");
     }
   }, []);
@@ -42,6 +44,14 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
   return (
     <>
       <div className={sideBarClass} style={{ width: width }}>
+        <button
+          className="openSideBar"
+          onClick={() => {
+            setOpen(!isOpen);
+          }}
+        >
+          ☰
+        </button>
         <div className="sideBarHandle" onMouseDown={enableResize}></div>
         <div className="row h-1 controls">
           {fileNameInput === "" ? (
@@ -91,6 +101,7 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
                 e.preventDefault();
                 const input = fileNameInputValue;
                 addNewFile(input);
+                addToTabs(input);
                 switchToFile(input);
                 localStorage.setItem(input, "# " + input.toString());
                 setFileNameInput("");
@@ -133,9 +144,6 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   removeFile(file.fileName);
-                  switchToFile(
-                    files[files.length > 2 ? files.length - 2 : 0].fileName
-                  );
                   localStorage.removeItem(file.fileName);
                 }}
               >
