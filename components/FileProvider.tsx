@@ -55,12 +55,19 @@ function initializeState(): State {
   if (typeof window !== "undefined") {
     activeFile = localStorage.getItem("currentFile") ?? "";
     if (activeFile === "") {
+      const newFileName: string = "welcome.md";
+      const newFileNameContent: string = "# Welcome";
       files.push({
-        fileName: "new.md",
-        content: "# New",
+        fileName: newFileName,
+        content: newFileNameContent,
       } as File);
-      localStorage.setItem("currentFile", "new.md");
-      localStorage.setItem("new.md", "# New");
+      tabbedFiles.push({
+        fileName: newFileName,
+        content: newFileNameContent,
+      } as File);
+      localStorage.setItem("tabbedFiles", newFileName);
+      localStorage.setItem("currentFile", newFileName);
+      localStorage.setItem(newFileName, newFileNameContent);
     }
     let keys = Object.keys(localStorage);
     let i = keys.length;
@@ -131,6 +138,18 @@ const reducer = (state: State, action: Action): State => {
           ? ({ fileName: action.newFileName, content: file.content } as File)
           : file
       );
+      const updatedTabbedFilesList: File[] = state.tabbedFiles.map((file) =>
+        file.fileName === action.fileName
+          ? ({ fileName: action.newFileName, content: file.content } as File)
+          : file
+      );
+      let tabbedFiles: string = localStorage.getItem("tabbedFiles") ?? "";
+      let splitTabbedFiles: string[] = tabbedFiles
+        .split(" ")
+        .filter((file) => file !== action.fileName);
+      tabbedFiles = splitTabbedFiles.join(" ");
+      tabbedFiles += " " + action.newFileName;
+      localStorage.setItem("tabbedFiles", tabbedFiles.trimStart());
       localStorage.setItem(
         action.newFileName ?? "",
         localStorage.getItem(action.fileName) ?? ""
@@ -140,7 +159,7 @@ const reducer = (state: State, action: Action): State => {
       return {
         activeFile: state.activeFile,
         files: updatedFileList,
-        tabbedFiles: state.tabbedFiles,
+        tabbedFiles: updatedTabbedFilesList,
       };
     }
 
