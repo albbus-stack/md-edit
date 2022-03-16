@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
 
 interface Props {
@@ -16,6 +17,8 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
     switchToFile,
     addToTabs,
   } = useFilesContext();
+
+  const { width, enableResize } = useResize({ minWidth: 200 });
 
   const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -38,7 +41,8 @@ const SideBar: React.FC<Props> = ({ isOpen }) => {
 
   return (
     <>
-      <div className={sideBarClass}>
+      <div className={sideBarClass} style={{ width: width }}>
+        <div className="sideBarHandle" onMouseDown={enableResize}></div>
         <div className="row h-1 controls">
           {fileNameInput === "" ? (
             <>

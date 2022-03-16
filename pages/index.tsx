@@ -33,7 +33,6 @@ const Home: NextPage = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("currentFile", activeFile);
     files.map((file) => {
       if (file.fileName === activeFile) {
         setText(file.content);
@@ -42,8 +41,13 @@ const Home: NextPage = () => {
     });
   }, [activeFile]);
 
+  const themeColors = {
+    "--primary-color": 0,
+    // fetch this and other colors from a custom theme manager hook
+  } as React.CSSProperties;
+
   return (
-    <div className="container">
+    <div className="container" style={themeColors}>
       <NavBar></NavBar>
       <Editor
         theme={editorTheme}

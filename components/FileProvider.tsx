@@ -73,8 +73,7 @@ function initializeState(): State {
         } as File);
       }
     }
-    const tabbedFilesString: string = (activeFile =
-      localStorage.getItem("tabbedFiles") ?? "");
+    const tabbedFilesString: string = localStorage.getItem("tabbedFiles") ?? "";
     const tabbedFilesSplit = tabbedFilesString
       .split(" ")
       .filter((file) => file !== "");
@@ -144,6 +143,7 @@ const reducer = (state: State, action: Action): State => {
     }
 
     case Actions.SWITCH_TO_FILE: {
+      localStorage.setItem("currentFile", action.fileName);
       return {
         activeFile: action.fileName,
         files: state.files,

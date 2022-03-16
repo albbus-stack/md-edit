@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
         switchToFile(switchedFile);
       }
     },
-    [files, activeFile]
+    [files, tabbedFiles, activeFile]
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const NavBar: React.FC = () => {
     return () => {
       document.removeEventListener("keydown", keyBindingsFunction, false);
     };
-  }, [files, activeFile]);
+  }, [files, tabbedFiles, activeFile]);
 
   const hamButtonClass = "openSideBar" + (isOpen ? " translateButton" : "");
 

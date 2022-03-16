@@ -10,6 +10,10 @@ body {
   background: #002b36;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 button,
 input[type="submit"],
 input[type="reset"] {
@@ -20,6 +24,29 @@ input[type="reset"] {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+input[type="submit"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding-left: 1rem;
+}
+
+input[type="text"] {
+  background: none;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  outline: 1px solid rgb(189, 189, 189);
+  padding: 0.3rem;
+  border-radius: 3px;
+  padding-left: 0.5rem;
+  width: 80%;
 }
 
 .sc-bdvvtL {
@@ -35,18 +62,30 @@ input[type="reset"] {
   z-index: 0;
 }
 
+#__next {
+  height: 100%;
+  width: 100%;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+.h-1 {
+  height: 72px;
 }
 
-#__next {
-  height: 100%;
-  width: 100%;
+.spacer {
+  flex-grow: 1;
+}
+
+.visible {
+  transform: translateX(0) !important;
+}
+
+.relative {
+  position: relative !important;
 }
 
 .container {
@@ -67,10 +106,7 @@ a {
 .tab {
   margin-left: 0.5rem;
   margin-top: 0.3rem;
-  padding-bottom: 0.4rem;
-  padding-top: 0.1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.1rem 0.5rem 0.4rem 0.5rem;
   display: flex;
   font-style: italic;
   position: relative;
@@ -81,7 +117,7 @@ a {
 }
 
 .firstTab {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
 
 .activeTab {
@@ -167,10 +203,6 @@ a {
   background: white;
 }
 
-.spacer {
-  flex-grow: 1;
-}
-
 .field {
   margin-left: 1rem;
 }
@@ -200,13 +232,9 @@ a {
   width: 20vw;
   background-color: #002b36;
   border-left: 1px solid rgb(66, 74, 87);
-  transform: translateX(200%);
+  transform: translateX(30vw);
   transition: transform 500ms;
   z-index: 1;
-}
-
-.visible {
-  transform: translateX(0%);
 }
 
 .row {
@@ -221,44 +249,8 @@ a {
 }
 
 .openSideBar {
-  margin-right: 2rem;
+  margin-right: 1.5rem;
   transition: transform 500ms;
-}
-
-.translateButton {
-  transform: translateX(-20vw);
-}
-
-.selected {
-  background-color: #003b49;
-}
-
-.h-1 {
-  height: 72px;
-}
-
-input[type="submit"] {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  padding-left: 1rem;
-}
-
-input[type="text"] {
-  background: none;
-  color: inherit;
-  border: none;
-  cursor: pointer;
-  outline: 1px solid rgb(189, 189, 189);
-  padding: 0;
-  padding: 0.3rem;
-  border-radius: 3px;
-  padding-left: 0.5rem;
-  width: 80%;
 }
 
 .deleteButton {
@@ -267,8 +259,8 @@ input[type="text"] {
   right: 1.5rem;
 }
 
-.relative {
-  position: relative;
+.translateButton {
+  transform: translateX(-20vw);
 }
 
 #fileContainer:hover .deleteButton,
@@ -286,4 +278,25 @@ input[type="text"] {
   font-size: 0.8rem;
   margin-top: 0.2rem;
   margin-left: 0.5rem;
+}
+
+.selected {
+  background-color: #003b49;
+}
+
+.sideBarHandle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 100vh;
+  z-index: 2;
+  /* background-color: black; */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: e-resize;
 }
