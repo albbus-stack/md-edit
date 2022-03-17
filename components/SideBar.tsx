@@ -123,7 +123,7 @@ const SideBar: React.FC = () => {
             </form>
           )}
         </div>
-        {files?.map((file) => {
+        {files.map((file) => {
           const divClass =
             "row filename relative" +
             (file.fileName === activeFile ? " selected" : "");

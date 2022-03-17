@@ -43,9 +43,9 @@ interface State {
 }
 
 const initialState: State = {
-  activeFile: "",
-  files: [{ fileName: "", content: "" } as File],
-  tabbedFiles: [{ fileName: "", content: "" } as File],
+  activeFile: "welcome.md",
+  files: [{ fileName: "welcome.md", content: "# Welcome" } as File],
+  tabbedFiles: [{ fileName: "welcome.md", content: "# Welcome" } as File],
 };
 
 function initializeState(): State {
@@ -91,7 +91,7 @@ function initializeState(): State {
     }
   }
 
-  if (files && activeFile) {
+  if (files && activeFile && tabbedFiles) {
     return { activeFile: activeFile, files: files, tabbedFiles: tabbedFiles };
   }
   return initialState;

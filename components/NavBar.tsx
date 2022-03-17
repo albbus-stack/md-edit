@@ -71,7 +71,7 @@ const NavBar: React.FC = () => {
   return (
     <>
       <div className="topBar">
-        {tabbedFiles?.map((file, index) => {
+        {tabbedFiles.map((file, index) => {
           const divClass =
             "tab " +
             (file.fileName === activeFile ? " activeTab" : "") +

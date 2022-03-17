@@ -261,6 +261,13 @@ a {
   right: 1.5rem;
 }
 
+#fileContainer {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #fileContainer:hover .deleteButton,
 #fileContainer:hover .addToTabButton {
   visibility: visible;
