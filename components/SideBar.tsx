@@ -103,7 +103,6 @@ const SideBar: React.FC = () => {
                 addNewFile(input);
                 addToTabs(input);
                 switchToFile(input);
-                localStorage.setItem(input, "# " + input.toString());
                 setFileNameInput("");
               }}
             >

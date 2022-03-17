@@ -101,6 +101,7 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case Actions.ADD_NEW_FILE: {
       const fileName: string = action.fileName;
+      localStorage.setItem(fileName, "# " + fileName.toString());
       return {
         activeFile: fileName,
         files: [

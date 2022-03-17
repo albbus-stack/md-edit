@@ -1,45 +1,64 @@
 import React, { useContext, useReducer } from "react";
 
+interface Theme {
+  backgroundColor: string;
+  textColor: string;
+  activeFileColor: string;
+}
+
 enum Actions {
   CHANGE_COLORS = "CHANGE_COLORS",
 }
 
 interface Action {
   type: Actions;
-  backgroundColor: string;
-  textColor: string;
+  theme: Theme;
 }
 
 interface Context {
-  backgroundColor: string;
-  textColor: string;
-  changeColors: (backgroundColor: string, textColor: string) => void;
+  theme: Theme;
+  changeColors: (theme: {
+    backgroundColor: string;
+    textColor: string;
+    activeFileColor: string;
+  }) => void;
 }
 
 interface State {
-  backgroundColor: string;
-  textColor: string;
+  theme: Theme;
 }
 
 const initialState: State = {
-  backgroundColor: "",
-  textColor: "",
+  theme: {
+    backgroundColor: "#002b36",
+    textColor: "white",
+    activeFileColor: "#003b49",
+  },
 };
 
 function initializeState(): State {
   let backgroundColor: string = "";
   let textColor: string = "";
+  let activeFileColor: string = "";
   if (typeof window !== "undefined") {
-    backgroundColor = localStorage.getItem("backgroundColor") ?? "";
-    textColor = localStorage.getItem("textColor") ?? "";
+    backgroundColor = localStorage.getItem("backgroundColor") ?? "#002b36";
+    textColor = localStorage.getItem("textColor") ?? "white";
+    activeFileColor = localStorage.getItem("activeFileColor") ?? "#003b49";
     if (backgroundColor === "" || textColor === "") {
       localStorage.setItem("backgroundColor", "#002b36");
       localStorage.setItem("textColor", "white");
+      localStorage.setItem("activeFileColor", "#003b49");
     }
   }
 
   if (backgroundColor && textColor) {
-    return { backgroundColor: backgroundColor, textColor: textColor };
+    return {
+      theme: {
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        activeFileColor: activeFileColor,
+      },
+    };
   }
   return initialState;
 }
@@ -47,11 +66,15 @@ function initializeState(): State {
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case Actions.CHANGE_COLORS: {
-      const background: string = action.backgroundColor;
-      const text: string = action.textColor;
+      const background: string = action.theme.backgroundColor;
+      const text: string = action.theme.textColor;
+      const activeFile: string = action.theme.activeFileColor;
       return {
-        backgroundColor: background,
-        textColor: text,
+        theme: {
+          backgroundColor: background,
+          textColor: text,
+          activeFileColor: activeFile,
+        },
       };
     }
 
@@ -76,10 +99,9 @@ const ThemeManager: React.FC = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState, initializeState);
 
   const value: Context = {
-    backgroundColor: state.backgroundColor,
-    textColor: state.textColor,
-    changeColors: (backgroundColor: string, textColor: string) => {
-      dispatch({ type: Actions.CHANGE_COLORS, backgroundColor, textColor });
+    theme: state.theme,
+    changeColors: (theme: Theme) => {
+      dispatch({ type: Actions.CHANGE_COLORS, theme });
     },
   };
 

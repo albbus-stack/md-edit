@@ -4,6 +4,7 @@ import Editor from "rich-markdown-editor";
 import editorTheme from "../lib/editorTheme";
 import dynamic from "next/dynamic";
 import { useFilesContext } from "../components/FileProvider";
+import { useThemeContext } from "../components/ThemeManager";
 
 const NavBar = dynamic(() => import("../components/NavBar"), {
   ssr: false,
@@ -21,6 +22,8 @@ const Home: NextPage = () => {
   } = useFilesContext();
 
   const [newText, setNewText] = useState("");
+
+  const { theme, changeColors } = useThemeContext();
 
   const [text, setText] = useState(() => {
     let textData = "";
@@ -41,16 +44,43 @@ const Home: NextPage = () => {
     });
   }, [activeFile]);
 
+  useEffect(() => {
+    document.body.style.setProperty(
+      "--background-color",
+      theme.backgroundColor
+    );
+    document.body.style.setProperty("--text-color", theme.textColor);
+    document.body.style.setProperty(
+      "--active-file-color",
+      theme.activeFileColor
+    );
+  }, [theme]);
+
   const themeColors = {
     "--primary-color": 0,
     // fetch this and other colors from a custom theme manager hook
   } as React.CSSProperties;
 
   return (
-    <div className="container" style={themeColors}>
+    <div
+      className="container"
+      style={themeColors}
+      // Example of use
+      // onClick={() => {
+      //   changeColors({
+      //     backgroundColor: "black",
+      //     textColor: "white",
+      //     activeFileColor: "gray",
+      //   });
+      // }}
+    >
       <NavBar></NavBar>
       <Editor
-        theme={editorTheme}
+        theme={{
+          ...editorTheme,
+          background: theme.backgroundColor,
+          text: theme.textColor,
+        }}
         onChange={(value) => {
           setText(value);
           localStorage.setItem(activeFile, text);
