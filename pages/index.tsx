@@ -56,15 +56,9 @@ const Home: NextPage = () => {
     );
   }, [theme]);
 
-  const themeColors = {
-    "--primary-color": 0,
-    // fetch this and other colors from a custom theme manager hook
-  } as React.CSSProperties;
-
   return (
     <div
       className="container"
-      style={themeColors}
       // Example of use
       // onClick={() => {
       //   changeColors({

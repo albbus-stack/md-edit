@@ -125,7 +125,7 @@ a {
 
 .activeTab {
   font-style: italic;
-  color: #cccc;
+  color: #cccc !important;
 }
 
 .activeTab::after {
@@ -271,9 +271,15 @@ a {
   user-select: none;
 }
 
+#fileContainer:hover {
+  color: white;
+}
+
 #fileContainer:hover .deleteButton,
-#fileContainer:hover .addToTabButton {
+.addToTabButton,
+.removeFromTabsButton {
   visibility: visible;
+  color: #cccc;
 }
 
 .controls {
@@ -290,6 +296,7 @@ a {
 
 .selected {
   background-color: var(--active-file-color);
+  color: #cccc !important;
 }
 
 .sideBarHandle {
