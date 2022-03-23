@@ -29,29 +29,6 @@ input[type="reset"] {
   outline: inherit;
 }
 
-input[type="submit"] {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  padding-left: 1rem;
-}
-
-input[type="text"] {
-  background: none;
-  color: inherit;
-  border: none;
-  cursor: pointer;
-  outline: 1px solid rgb(189, 189, 189);
-  padding: 0.3rem;
-  border-radius: 3px;
-  padding-left: 0.5rem;
-  width: 80%;
-}
-
 .sc-bdvvtL {
   height: 100%;
   width: 90vw;
@@ -87,8 +64,32 @@ a {
   transform: translateX(0) !important;
 }
 
+.opacity-0 {
+  opacity: 0 !important;
+  visibility: hidden;
+  transition: visibility 0s 150ms, opacity 150ms linear !important;
+}
+
 .relative {
   position: relative !important;
+}
+
+/* Move the following to the Home.module */
+
+input[type="submit"] {
+  padding-left: 1rem;
+}
+
+input[type="text"] {
+  background: none;
+  color: inherit;
+  border: none;
+  cursor: text;
+  outline: 1px solid rgb(189, 189, 189);
+  padding: 0.3rem;
+  border-radius: 3px;
+  padding-left: 0.5rem;
+  width: 80%;
 }
 
 .container {
@@ -306,7 +307,6 @@ a {
   width: 10px;
   height: 100vh;
   z-index: 2;
-  /* background-color: black; */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -314,4 +314,58 @@ a {
   -ms-user-select: none;
   user-select: none;
   cursor: e-resize;
+}
+
+.paletteWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transition: visibility 0s, opacity 150ms linear;
+}
+
+.palette {
+  margin-top: calc(1rem + 7vh);
+  padding: 0.5rem;
+  width: 30vw;
+  height: 3rem;
+  opacity: 1;
+  transition: opacity 500ms;
+  border: 1px solid rgb(66, 74, 87);
+}
+
+.palette > form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+input[name="palette"] {
+  outline: none;
+  color: #cccc;
+  font-size: 1rem;
+  cursor: text;
+  width: 100%;
+}
+
+.paletteSubmit {
+  color: #cccc !important;
+  padding: 0 !important;
+}
+
+.searchSuggestions {
+  margin-top: 1rem;
+  width: 30vw;
+}
+
+.suggestion {
+  color: #cccc;
+  padding: 0.5rem;
+  border: 1px solid rgb(66, 74, 87);
+  cursor: pointer;
 }
