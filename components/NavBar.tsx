@@ -1,20 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import useResize from "../lib/useResize";
+import React, { useCallback, useEffect } from "react";
 import { useFilesContext } from "./FileProvider";
 import SideBar from "./SideBar";
+import CommandPalette from "./CommandPalette";
 
 const NavBar: React.FC = () => {
-  const {
-    activeFile,
-    files,
-    tabbedFiles,
-    addNewFile,
-    removeFile,
-    renameFile,
-    switchToFile,
-    addToTabs,
-    removeFromTabs,
-  } = useFilesContext();
+  const { activeFile, files, tabbedFiles, switchToFile, removeFromTabs } =
+    useFilesContext();
 
   const keyBindingsFunction = useCallback(
     (e: KeyboardEvent) => {
@@ -70,6 +61,7 @@ const NavBar: React.FC = () => {
 
   return (
     <>
+      <CommandPalette />
       <div className="topBar">
         {tabbedFiles.map((file, index) => {
           const divClass =
