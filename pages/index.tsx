@@ -11,15 +11,7 @@ const NavBar = dynamic(() => import("../components/NavBar"), {
 });
 
 const Home: NextPage = () => {
-  const {
-    activeFile,
-    files,
-    addNewFile,
-    removeFile,
-    renameFile,
-    switchToFile,
-    modifyFile,
-  } = useFilesContext();
+  const { activeFile, files, modifyFile } = useFilesContext();
 
   const [newText, setNewText] = useState("");
 

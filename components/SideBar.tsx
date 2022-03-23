@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
 
@@ -6,7 +6,6 @@ const SideBar: React.FC = () => {
   const {
     activeFile,
     files,
-    tabbedFiles,
     addNewFile,
     removeFile,
     renameFile,
