@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import searchProvider, { Suggestion } from "../lib/searchProvider";
-import { useFilesContext } from "./FileProvider";
+import { Actions, useFilesContext } from "./FileProvider";
 
 interface Props {
   isSidebarOpen: boolean;
@@ -67,6 +67,12 @@ const CommandPalette: React.FC<Props> = ({
         setSelectedIndex((prevState) => {
           return (prevState + 1) % searchSuggestions.length;
         });
+      } else if (e.ctrlKey && e.key === "*") {
+        setSidebarOpen(true);
+        setFileNameInput("add");
+        setFileNameInputValue(".md");
+      } else if (e.ctrlKey && e.key === "/") {
+        executeDispatch(Actions.REMOVE_FILE, activeFile);
       }
     },
     [isPaletteOpen, setSelectedIndex, searchSuggestions]
