@@ -30,7 +30,5 @@ A simple WYSIWYG browser markdown editor that persists in your local storage, cu
 
 * Use Modules for Css.
 
-* Command palette.
-
 * Add shortcut documentation on site and here (
 DONE: ctrl+. toggle sidebar, ctrl+, next tab, ctrl+; previous tab, ctrl+: palette, ctrl+* new file, ctrl+/ remove file).

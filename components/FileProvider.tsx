@@ -291,8 +291,8 @@ const FileProvider: React.FC = (props) => {
         dispatch({ type: action, fileName });
         return "";
       } else {
-        if (action === Actions.ADD_NEW_FILE) return "new";
-        if (action === Actions.RENAME_FILE) return "edit";
+        if (action === Actions.ADD_NEW_FILE) return "new fast";
+        if (action === Actions.RENAME_FILE) return "edit fast";
         return "";
       }
     },

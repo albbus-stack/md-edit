@@ -86,7 +86,7 @@ const SideBar: React.FC<Props> = ({
                 +
               </button>
             </>
-          ) : fileNameInput === "edit" ? (
+          ) : fileNameInput.includes("edit") ? (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -94,6 +94,9 @@ const SideBar: React.FC<Props> = ({
                 switchToFile(fileNameInputValue);
                 setFileNameInput("");
                 setFileNameInputValue("");
+                if (fileNameInput === "edit fast") {
+                  setOpen(false);
+                }
               }}
             >
               <input
@@ -117,6 +120,9 @@ const SideBar: React.FC<Props> = ({
                 switchToFile(input);
                 setFileNameInput("");
                 setFileNameInputValue("");
+                if (fileNameInput === "new fast") {
+                  setOpen(false);
+                }
               }}
             >
               <input

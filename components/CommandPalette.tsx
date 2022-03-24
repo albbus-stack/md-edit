@@ -22,6 +22,7 @@ const CommandPalette: React.FC<Props> = ({
   const { activeFile, executeDispatch } = useFilesContext();
 
   const [isPaletteOpen, setPaletteOpen] = useState(false);
+  const [toBeSelected, setToBeSelected] = useState(true);
   const [isSecondInputOpen, setSecondInputOpen] = useState(false);
   const [paletteInput, setPaletteInput] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
@@ -40,9 +41,9 @@ const CommandPalette: React.FC<Props> = ({
     });
     if (secondInputType !== "") {
       setSidebarOpen(true);
-      if (secondInputType === "new") {
+      if (secondInputType === "new fast") {
         setFileNameInputValue(".md");
-      } else if (secondInputType === "edit") {
+      } else if (secondInputType === "edit fast") {
         setFileNameInputValue(activeFile ?? "");
       }
       setFileNameInput(secondInputType);
@@ -81,6 +82,10 @@ const CommandPalette: React.FC<Props> = ({
   useEffect(() => {
     document.addEventListener("keydown", keyBindingsFunction, false);
 
+    if (!isPaletteOpen) {
+      setToBeSelected(true);
+    }
+
     return () => {
       document.removeEventListener("keydown", keyBindingsFunction, false);
     };
@@ -108,7 +113,15 @@ const CommandPalette: React.FC<Props> = ({
       >
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
-            ref={(input) => input && isPaletteOpen && input.focus()}
+            ref={(input) => {
+              if (input && isPaletteOpen) {
+                input.focus();
+                if (toBeSelected) {
+                  input.select();
+                  setToBeSelected(false);
+                }
+              }
+            }}
             type="text"
             name="palette"
             value={paletteInput}
