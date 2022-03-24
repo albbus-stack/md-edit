@@ -1,18 +1,76 @@
 import { useCallback, useEffect, useState } from "react";
 import searchProvider, { Suggestion } from "../lib/searchProvider";
+import { useFilesContext } from "./FileProvider";
 
-const CommandPalette: React.FC = () => {
+interface Props {
+  isSidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  fileNameInput: string;
+  setFileNameInput: React.Dispatch<React.SetStateAction<string>>;
+  fileNameInputValue: string;
+  setFileNameInputValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const CommandPalette: React.FC<Props> = ({
+  isSidebarOpen,
+  setSidebarOpen,
+  fileNameInput,
+  setFileNameInput,
+  fileNameInputValue,
+  setFileNameInputValue,
+}) => {
+  const { activeFile, executeDispatch } = useFilesContext();
+
   const [isPaletteOpen, setPaletteOpen] = useState(false);
+  const [isSecondInputOpen, setSecondInputOpen] = useState(false);
   const [paletteInput, setPaletteInput] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
-    if (e.ctrlKey && e.key === ":") {
-      setPaletteOpen((prevState) => {
-        return !prevState;
-      });
+  const handleSubmit = (e?: any) => {
+    if (e) {
+      e.preventDefault();
     }
-  }, []);
+    let secondInputType: string = executeDispatch(
+      searchSuggestions[selectedIndex].action,
+      activeFile
+    );
+    setPaletteOpen((prevState) => {
+      return !prevState;
+    });
+    if (secondInputType !== "") {
+      setSidebarOpen(true);
+      if (secondInputType === "new") {
+        setFileNameInputValue(".md");
+      } else if (secondInputType === "edit") {
+        setFileNameInputValue(activeFile ?? "");
+      }
+      setFileNameInput(secondInputType);
+    }
+  };
+
+  const keyBindingsFunction = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === ":") {
+        setPaletteOpen((prevState) => {
+          return !prevState;
+        });
+      } else if (isPaletteOpen && e.keyCode === 38) {
+        setSelectedIndex((prevState) => {
+          return (
+            (((prevState - 1) % searchSuggestions.length) +
+              searchSuggestions.length) %
+            searchSuggestions.length
+          );
+        });
+      } else if (isPaletteOpen && e.keyCode === 40) {
+        setSelectedIndex((prevState) => {
+          return (prevState + 1) % searchSuggestions.length;
+        });
+      }
+    },
+    [isPaletteOpen, setSelectedIndex, searchSuggestions]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", keyBindingsFunction, false);
@@ -20,10 +78,9 @@ const CommandPalette: React.FC = () => {
     return () => {
       document.removeEventListener("keydown", keyBindingsFunction, false);
     };
-  }, []);
+  }, [isPaletteOpen, setSelectedIndex, searchSuggestions]);
 
   useEffect(() => {
-    //console.log(searchProvider({ query: paletteInput }).suggestions);
     setSearchSuggestions(searchProvider({ query: paletteInput }).suggestions);
   }, [paletteInput]);
 
@@ -43,11 +100,7 @@ const CommandPalette: React.FC = () => {
           e.stopPropagation();
         }}
       >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <form onSubmit={(e) => handleSubmit(e)}>
           <input
             ref={(input) => input && isPaletteOpen && input.focus()}
             type="text"
@@ -57,7 +110,6 @@ const CommandPalette: React.FC = () => {
               setPaletteInput(e.target.value);
             }}
           />
-          {/* <input type="submit" className="paletteSubmit" value="✓" /> */}
         </form>
       </div>
       <div
@@ -66,11 +118,14 @@ const CommandPalette: React.FC = () => {
           e.stopPropagation();
         }}
       >
-        {searchSuggestions.map((suggestion) => {
+        {searchSuggestions.map((suggestion, index) => {
           return (
             <div
-              className="suggestion"
-              key={suggestion.value} /* onClick={suggestion.action} */
+              className={
+                "suggestion" + (index === selectedIndex ? " selected" : "")
+              }
+              key={suggestion.value}
+              onClick={() => handleSubmit()}
             >
               {suggestion.value}
             </div>

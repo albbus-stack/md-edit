@@ -2,7 +2,23 @@ import { useCallback, useEffect, useState } from "react";
 import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
 
-const SideBar: React.FC = () => {
+interface Props {
+  isOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  fileNameInput: string;
+  setFileNameInput: React.Dispatch<React.SetStateAction<string>>;
+  fileNameInputValue: string;
+  setFileNameInputValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SideBar: React.FC<Props> = ({
+  isOpen,
+  setOpen,
+  fileNameInput,
+  setFileNameInput,
+  fileNameInputValue,
+  setFileNameInputValue,
+}) => {
   const {
     activeFile,
     files,
@@ -15,8 +31,6 @@ const SideBar: React.FC = () => {
 
   const { width, enableResize } = useResize({ minWidth: 200 });
 
-  const [isOpen, setOpen] = useState(false);
-
   const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
     if (e.key === "." && e.ctrlKey) {
       setOpen((prevState) => {
@@ -24,6 +38,7 @@ const SideBar: React.FC = () => {
       });
     } else if (e.key === "Escape") {
       setFileNameInput("");
+      setFileNameInputValue("");
     }
   }, []);
 
@@ -34,9 +49,6 @@ const SideBar: React.FC = () => {
       document.removeEventListener("keydown", keyBindingsFunction, false);
     };
   }, []);
-
-  const [fileNameInput, setFileNameInput] = useState("");
-  const [fileNameInputValue, setFileNameInputValue] = useState("");
 
   const sideBarClass = "sideBar" + (isOpen ? " visible" : "");
 
@@ -81,6 +93,7 @@ const SideBar: React.FC = () => {
                 renameFile(activeFile, fileNameInputValue);
                 switchToFile(fileNameInputValue);
                 setFileNameInput("");
+                setFileNameInputValue("");
               }}
             >
               <input
@@ -103,6 +116,7 @@ const SideBar: React.FC = () => {
                 addToTabs(input);
                 switchToFile(input);
                 setFileNameInput("");
+                setFileNameInputValue("");
               }}
             >
               <input

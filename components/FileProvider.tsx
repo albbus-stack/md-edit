@@ -6,7 +6,7 @@ interface File {
   isActive?: boolean;
 }
 
-enum Actions {
+export enum Actions {
   ADD_NEW_FILE = "ADD_NEW_FILE",
   REMOVE_FILE = "REMOVE_FILE",
   RENAME_FILE = "RENAME_FILE",
@@ -34,6 +34,11 @@ interface Context {
   modifyFile: (fileName: string, content: string) => void;
   addToTabs: (fileName: string) => void;
   removeFromTabs: (fileName: string) => void;
+  executeDispatch: (
+    action: Actions,
+    fileName: string,
+    newFileName?: string
+  ) => string;
 }
 
 interface State {
@@ -123,6 +128,12 @@ const reducer = (state: State, action: Action): State => {
         (file) => file.fileName !== action.fileName
       );
       localStorage.removeItem(action.fileName);
+      let newTabbedFilesString = "";
+      filteredTabbedFileList.forEach((file) => {
+        newTabbedFilesString += " " + file.fileName;
+      });
+      localStorage.setItem("tabbedFiles", newTabbedFilesString);
+      console.log(filteredTabbedFileList);
       return {
         activeFile:
           action.fileName === state.activeFile
@@ -270,6 +281,20 @@ const FileProvider: React.FC = (props) => {
     },
     removeFromTabs: (fileName: string) => {
       dispatch({ type: Actions.REMOVE_FROM_TABS, fileName });
+    },
+    executeDispatch: (
+      action: Actions,
+      fileName: string,
+      newFileName?: string
+    ) => {
+      if (action === Actions.REMOVE_FILE) {
+        dispatch({ type: action, fileName });
+        return "";
+      } else {
+        if (action === Actions.ADD_NEW_FILE) return "new";
+        if (action === Actions.RENAME_FILE) return "edit";
+        return "";
+      }
     },
   };
 

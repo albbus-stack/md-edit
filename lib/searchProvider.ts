@@ -1,6 +1,6 @@
-import { useFilesContext } from "../components/FileProvider";
+import { Actions } from "../components/FileProvider";
 
-enum Actions {
+enum ReadableActions {
   ADD_NEW_FILE = "Add new file",
   REMOVE_FILE = "Remove file",
   RENAME_FILE = "Rename file",
@@ -8,7 +8,7 @@ enum Actions {
 
 export interface Suggestion {
     value: string;
-    //action:void;
+    action:Actions;
 }
 
 interface Props {
@@ -20,12 +20,14 @@ interface ReturnProps {
 }
 
 const searchProvider = ({query}:Props): ReturnProps => {
-
     let suggestions:Suggestion[] = [];
     if(query !== ""){
-        for(let action of Object.values(Actions)){
+        for(let action of Object.values(ReadableActions)){
             if(action.toLowerCase().includes(query.toLowerCase())){
-                suggestions.push({value:action})
+                suggestions.push({
+                    value:action, 
+                    action:Object.values(Actions)[Object.values(ReadableActions).indexOf(action)]
+                })
             }
         }
     }

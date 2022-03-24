@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFilesContext } from "./FileProvider";
 import SideBar from "./SideBar";
 import CommandPalette from "./CommandPalette";
@@ -6,6 +6,10 @@ import CommandPalette from "./CommandPalette";
 const NavBar: React.FC = () => {
   const { activeFile, files, tabbedFiles, switchToFile, removeFromTabs } =
     useFilesContext();
+
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [fileNameInput, setFileNameInput] = useState("");
+  const [fileNameInputValue, setFileNameInputValue] = useState("");
 
   const keyBindingsFunction = useCallback(
     (e: KeyboardEvent) => {
@@ -61,7 +65,14 @@ const NavBar: React.FC = () => {
 
   return (
     <>
-      <CommandPalette />
+      <CommandPalette
+        isSidebarOpen={isSidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        fileNameInput={fileNameInput}
+        setFileNameInput={setFileNameInput}
+        fileNameInputValue={fileNameInputValue}
+        setFileNameInputValue={setFileNameInputValue}
+      />
       <div className="topBar">
         {tabbedFiles.map((file, index) => {
           const divClass =
@@ -103,7 +114,14 @@ const NavBar: React.FC = () => {
           );
         })}
         <div className="spacer"></div>
-        <SideBar />
+        <SideBar
+          isOpen={isSidebarOpen}
+          setOpen={setSidebarOpen}
+          fileNameInput={fileNameInput}
+          setFileNameInput={setFileNameInput}
+          fileNameInputValue={fileNameInputValue}
+          setFileNameInputValue={setFileNameInputValue}
+        />
       </div>
     </>
   );
