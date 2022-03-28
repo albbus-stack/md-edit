@@ -74,8 +74,6 @@ a {
   position: relative !important;
 }
 
-/* Move the following to the Home.module */
-
 input[type="submit"] {
   padding-left: 1rem;
 }
