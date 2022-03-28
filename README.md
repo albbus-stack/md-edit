@@ -28,7 +28,4 @@ A simple WYSIWYG browser markdown editor that persists in your local storage, cu
 
 * Add a theme manager.
 
-* Use Modules for Css.
-
-* Add shortcut documentation on site and here (
-DONE: ctrl+. toggle sidebar, ctrl+, next tab, ctrl+; previous tab, ctrl+: palette, ctrl+* new file, ctrl+/ remove file).
+* Add shortcut documentation on site and here (ctrl+. toggle sidebar, ctrl+, next tab, ctrl+; previous tab, ctrl+: palette, ctrl+* new file, ctrl+/ remove file).
