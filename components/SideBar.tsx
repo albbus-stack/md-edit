@@ -9,6 +9,8 @@ interface Props {
   setFileNameInput: React.Dispatch<React.SetStateAction<string>>;
   fileNameInputValue: string;
   setFileNameInputValue: React.Dispatch<React.SetStateAction<string>>;
+  themeEditorOpen: boolean;
+  setThemeEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SideBar: React.FC<Props> = ({
@@ -18,6 +20,8 @@ const SideBar: React.FC<Props> = ({
   setFileNameInput,
   fileNameInputValue,
   setFileNameInputValue,
+  themeEditorOpen,
+  setThemeEditorOpen,
 }) => {
   const {
     activeFile,
@@ -83,7 +87,18 @@ const SideBar: React.FC<Props> = ({
                   setFileNameInput("new");
                 }}
               >
-                +
+                &#65291;
+              </button>
+
+              <button
+                className="themeButton"
+                onClick={() => {
+                  setThemeEditorOpen((prevState) => {
+                    return !prevState;
+                  });
+                }}
+              >
+                &#127912;
               </button>
             </>
           ) : fileNameInput.includes("edit") ? (

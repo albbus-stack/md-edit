@@ -85,10 +85,10 @@ input[type="text"] {
   color: inherit;
   border: none;
   cursor: text;
-  outline: 1px solid rgb(189, 189, 189);
-  padding: 0.3rem;
+  outline: 0px solid rgb(189, 189, 189);
+  padding: 0.5rem;
   border-radius: 3px;
-  padding-left: 0.5rem;
+  padding-left: 1rem;
   width: 80%;
 }
 
@@ -152,6 +152,12 @@ input[type="text"] {
   font-size: 1rem;
 }
 
+.themeButton {
+  position: relative;
+  padding: 0.6rem;
+  font-size: 1rem;
+}
+
 .editFileNameButton:hover::after {
   content: "Edit the filename";
   font-size: 0.9rem;
@@ -161,7 +167,7 @@ input[type="text"] {
   width: 310%;
   top: 105%;
   left: -300%;
-  transform: translateX(50%);
+  transform: translateX(60%);
   border-radius: 3px;
   background: white;
   z-index: 2;
@@ -186,10 +192,10 @@ input[type="text"] {
   color: black;
   position: absolute;
   height: 21px;
-  width: 400%;
-  top: 104%;
+  width: 310%;
+  top: 98%;
   left: -500%;
-  transform: translateX(50%);
+  transform: translateX(125%);
   border-radius: 3px;
   background: white;
   z-index: 2;
@@ -200,8 +206,36 @@ input[type="text"] {
   position: absolute;
   height: 10px;
   width: 10px;
+  top: 85%;
+  left: 45%;
+  transform: rotate(45deg) translate(-10%, 40%);
+  border-radius: 2px;
+  background: white;
+}
+
+.themeButton:hover::after {
+  content: "Change theme";
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  position: absolute;
+  height: 21px;
+  width: 280%;
+  top: 104%;
+  left: -500%;
+  transform: translateX(130%);
+  border-radius: 3px;
+  background: white;
+  z-index: 2;
+}
+
+.themeButton:hover::before {
+  content: "";
+  position: absolute;
+  height: 10px;
+  width: 10px;
   top: 90%;
-  left: 50%;
+  left: 45%;
   transform: rotate(45deg) translate(-10%, 40%);
   border-radius: 2px;
   background: white;
@@ -336,7 +370,7 @@ input[type="text"] {
   height: 3rem;
   opacity: 1;
   transition: opacity 500ms;
-  border: 1px solid rgb(66, 74, 87);
+  outline: 1px solid rgb(66, 74, 87);
 }
 
 .palette > form {
@@ -366,6 +400,37 @@ input[name="palette"] {
 .suggestion {
   color: #cccc;
   padding: 0.5rem;
-  border: 1px solid rgb(66, 74, 87);
+  outline: 1px solid rgb(66, 74, 87);
   cursor: pointer;
+}
+
+.themeEditorWrapper {
+  width: 20vw;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 2;
+  transition: visibility 0s, opacity 150ms linear;
+  padding: 0.5rem;
+  opacity: 1;
+  outline: 1px solid rgb(66, 74, 87);
+}
+
+.react-colorful__hue-pointer {
+  width: 10px !important;
+  border-radius: 2px !important;
+  height: 98% !important;
+}
+
+.react-colorful__saturation,
+.react-colorful__hue {
+  border-radius: 0 !important;
+}
+
+.react-colorful {
+  padding: 0.5rem !important;
 }

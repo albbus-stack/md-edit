@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useFilesContext } from "./FileProvider";
 import SideBar from "./SideBar";
 import CommandPalette from "./CommandPalette";
+import ThemeEditor from "./ThemeEditor";
 
 const NavBar: React.FC = () => {
   const { activeFile, files, tabbedFiles, switchToFile, removeFromTabs } =
@@ -10,6 +11,7 @@ const NavBar: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [fileNameInput, setFileNameInput] = useState("");
   const [fileNameInputValue, setFileNameInputValue] = useState("");
+  const [themeEditorOpen, setThemeEditorOpen] = useState(false);
 
   const keyBindingsFunction = useCallback(
     (e: KeyboardEvent) => {
@@ -73,6 +75,7 @@ const NavBar: React.FC = () => {
         fileNameInputValue={fileNameInputValue}
         setFileNameInputValue={setFileNameInputValue}
       />
+      <ThemeEditor isOpen={themeEditorOpen} setOpen={setThemeEditorOpen} />
       <div className="topBar">
         {tabbedFiles.map((file, index) => {
           const divClass =
@@ -121,6 +124,8 @@ const NavBar: React.FC = () => {
           setFileNameInput={setFileNameInput}
           fileNameInputValue={fileNameInputValue}
           setFileNameInputValue={setFileNameInputValue}
+          themeEditorOpen={themeEditorOpen}
+          setThemeEditorOpen={setThemeEditorOpen}
         />
       </div>
     </>
