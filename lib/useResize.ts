@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   minWidth: number;
@@ -9,9 +9,7 @@ interface ReturnProps {
   enableResize: () => void;
 }
 
-const useResize = ({
-  minWidth,
-}: Props): ReturnProps => {
+const useResize = ({ minWidth }: Props): ReturnProps => {
   const [isResizing, setIsResizing] = useState(false);
   const [width, setWidth] = useState(minWidth);
 
@@ -32,20 +30,20 @@ const useResize = ({
         }
       }
     },
-    [minWidth, isResizing, setWidth],
+    [minWidth, isResizing, setWidth]
   );
 
   useEffect(() => {
-    document.addEventListener('mousemove', resize);
-    document.addEventListener('mouseup', disableResize);
+    document.addEventListener("mousemove", resize);
+    document.addEventListener("mouseup", disableResize);
 
     return () => {
-      document.removeEventListener('mousemove', resize)
-      document.removeEventListener('mouseup', disableResize)
-    }
+      document.removeEventListener("mousemove", resize);
+      document.removeEventListener("mouseup", disableResize);
+    };
   }, [disableResize, resize]);
 
   return { width, enableResize };
-}
+};
 
 export default useResize;

@@ -74,6 +74,8 @@ const NavBar: React.FC = () => {
         setFileNameInput={setFileNameInput}
         fileNameInputValue={fileNameInputValue}
         setFileNameInputValue={setFileNameInputValue}
+        themeEditorOpen={themeEditorOpen}
+        setThemeEditorOpen={setThemeEditorOpen}
       />
       <ThemeEditor isOpen={themeEditorOpen} setOpen={setThemeEditorOpen} />
       <div className="topBar">

@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
+        <title>md-edit</title>
         <link
           rel="apple-touch-icon"
           sizes="180x180"

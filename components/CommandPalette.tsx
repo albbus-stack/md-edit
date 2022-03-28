@@ -9,6 +9,8 @@ interface Props {
   setFileNameInput: React.Dispatch<React.SetStateAction<string>>;
   fileNameInputValue: string;
   setFileNameInputValue: React.Dispatch<React.SetStateAction<string>>;
+  themeEditorOpen: boolean;
+  setThemeEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CommandPalette: React.FC<Props> = ({
@@ -18,6 +20,8 @@ const CommandPalette: React.FC<Props> = ({
   setFileNameInput,
   fileNameInputValue,
   setFileNameInputValue,
+  themeEditorOpen,
+  setThemeEditorOpen,
 }) => {
   const { activeFile, executeDispatch } = useFilesContext();
 
@@ -32,22 +36,28 @@ const CommandPalette: React.FC<Props> = ({
     if (e) {
       e.preventDefault();
     }
-    let secondInputType: string = executeDispatch(
-      searchSuggestions[selectedIndex].action,
-      activeFile
-    );
+    console.log(searchSuggestions[selectedIndex]);
+    if (searchSuggestions[selectedIndex].action !== undefined) {
+      let secondInputType: string = executeDispatch(
+        searchSuggestions[selectedIndex].action ?? Actions.SWITCH_TO_FILE,
+        activeFile
+      );
+
+      if (secondInputType !== "") {
+        setSidebarOpen(true);
+        if (secondInputType === "new fast") {
+          setFileNameInputValue(".md");
+        } else if (secondInputType === "edit fast") {
+          setFileNameInputValue(activeFile ?? "");
+        }
+        setFileNameInput(secondInputType);
+      }
+    } else if (searchSuggestions[selectedIndex].value == "Open theme editor") {
+      setThemeEditorOpen((prevState) => !prevState);
+    }
     setPaletteOpen((prevState) => {
       return !prevState;
     });
-    if (secondInputType !== "") {
-      setSidebarOpen(true);
-      if (secondInputType === "new fast") {
-        setFileNameInputValue(".md");
-      } else if (secondInputType === "edit fast") {
-        setFileNameInputValue(activeFile ?? "");
-      }
-      setFileNameInput(secondInputType);
-    }
   };
 
   const keyBindingsFunction = useCallback(
