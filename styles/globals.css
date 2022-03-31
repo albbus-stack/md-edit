@@ -405,7 +405,6 @@ input[name="palette"] {
 
 .themeEditorWrapper {
   width: 20vw;
-  height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -415,6 +414,7 @@ input[name="palette"] {
   z-index: 2;
   transition: visibility 0s, opacity 150ms linear;
   padding: 0.5rem;
+  padding-top: 0.2rem;
   opacity: 1;
   outline: 1px solid rgb(66, 74, 87);
 }
@@ -432,4 +432,50 @@ input[name="palette"] {
 
 .react-colorful {
   padding: 0.5rem !important;
+}
+
+.colorCircle {
+  position: relative;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  outline: 1px solid white;
+}
+
+.colorCircle::after {
+  content: "✏️";
+  font-size: 0.75rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  opacity: 0.6;
+  color: white;
+}
+
+.colorSelectorLine {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.colorPicker {
+  position: absolute !important;
+  left: 110%;
+  top: 0;
+  width: 20vw !important;
+  height: 23vh !important;
+  z-index: 2;
+}
+
+.closeThemeEditor {
+  color: var(--text-color);
+  align-self: flex-end;
+  font-size: 1.1rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
 }

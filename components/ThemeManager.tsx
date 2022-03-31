@@ -3,7 +3,7 @@ import React, { useContext, useReducer } from "react";
 interface Theme {
   backgroundColor: string;
   textColor: string;
-  activeFileColor: string;
+  accentColor: string;
 }
 
 enum Actions {
@@ -20,7 +20,7 @@ interface Context {
   changeColors: (theme: {
     backgroundColor: string;
     textColor: string;
-    activeFileColor: string;
+    accentColor: string;
   }) => void;
 }
 
@@ -32,23 +32,21 @@ const initialState: State = {
   theme: {
     backgroundColor: "#002b36",
     textColor: "white",
-    activeFileColor: "#003b49",
+    accentColor: "#003b49",
   },
 };
 
 function initializeState(): State {
+  let themeString: string = "";
   let backgroundColor: string = "";
   let textColor: string = "";
-  let activeFileColor: string = "";
+  let accentColor: string = "";
   if (typeof window !== "undefined") {
-    backgroundColor = localStorage.getItem("backgroundColor") ?? "#002b36";
-    textColor = localStorage.getItem("textColor") ?? "white";
-    activeFileColor = localStorage.getItem("activeFileColor") ?? "#003b49";
-    if (backgroundColor === "" || textColor === "") {
-      localStorage.setItem("backgroundColor", "#002b36");
-      localStorage.setItem("textColor", "white");
-      localStorage.setItem("activeFileColor", "#003b49");
+    themeString = localStorage.getItem("theme") ?? "#002b36,white,#003b49";
+    if (themeString === "#002b36,white,#003b49") {
+      localStorage.setItem("theme", "#002b36,white,#003b49");
     }
+    [backgroundColor, textColor, accentColor] = themeString.split(",");
   }
 
   if (backgroundColor && textColor) {
@@ -56,7 +54,7 @@ function initializeState(): State {
       theme: {
         backgroundColor: backgroundColor,
         textColor: textColor,
-        activeFileColor: activeFileColor,
+        accentColor: accentColor,
       },
     };
   }
@@ -68,12 +66,13 @@ const reducer = (state: State, action: Action): State => {
     case Actions.CHANGE_COLORS: {
       const background: string = action.theme.backgroundColor;
       const text: string = action.theme.textColor;
-      const activeFile: string = action.theme.activeFileColor;
+      const accent: string = action.theme.accentColor;
+      localStorage.setItem("theme", background + "," + text + "," + accent);
       return {
         theme: {
           backgroundColor: background,
           textColor: text,
-          activeFileColor: activeFile,
+          accentColor: accent,
         },
       };
     }

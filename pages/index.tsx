@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
   const [newText, setNewText] = useState("");
 
-  const { theme, changeColors } = useThemeContext();
+  const { theme } = useThemeContext();
 
   const [text, setText] = useState(() => {
     let textData = "";
@@ -42,24 +42,11 @@ const Home: NextPage = () => {
       theme.backgroundColor
     );
     document.body.style.setProperty("--text-color", theme.textColor);
-    document.body.style.setProperty(
-      "--active-file-color",
-      theme.activeFileColor
-    );
+    document.body.style.setProperty("--active-file-color", theme.accentColor);
   }, [theme]);
 
   return (
-    <div
-      className="container"
-      // Example of use
-      // onClick={() => {
-      //   changeColors({
-      //     backgroundColor: "black",
-      //     textColor: "white",
-      //     activeFileColor: "gray",
-      //   });
-      // }}
-    >
+    <div className="container">
       <NavBar></NavBar>
       <Editor
         theme={{

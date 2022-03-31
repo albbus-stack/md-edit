@@ -133,7 +133,6 @@ const reducer = (state: State, action: Action): State => {
         newTabbedFilesString += " " + file.fileName;
       });
       localStorage.setItem("tabbedFiles", newTabbedFilesString);
-      console.log(filteredTabbedFileList);
       return {
         activeFile:
           action.fileName === state.activeFile

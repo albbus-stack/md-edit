@@ -36,7 +36,6 @@ const CommandPalette: React.FC<Props> = ({
     if (e) {
       e.preventDefault();
     }
-    console.log(searchSuggestions[selectedIndex]);
     if (searchSuggestions[selectedIndex].action !== undefined) {
       let secondInputType: string = executeDispatch(
         searchSuggestions[selectedIndex].action ?? Actions.SWITCH_TO_FILE,
