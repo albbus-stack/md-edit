@@ -8,12 +8,12 @@ A simple WYSIWYG browser markdown editor that persists in your local storage, cu
 
 ## Keyboard Shortcuts
 
-<kbd>Ctrl</kbd>+<kbd>.</kbd> : toggle sidebar
-<kbd>Ctrl</kbd>+<kbd>,</kbd> : next tab
-<kbd>Ctrl</kbd>+<kbd>;</kbd> : previous tab
-<kbd>Ctrl</kbd>+<kbd>:</kbd> : command palette
-<kbd>Ctrl</kbd>+<kbd>*</kbd> : create new file
-<kbd>Ctrl</kbd>+<kbd>/</kbd> : delete open file
+<kbd>Ctrl</kbd>+<kbd>.</kbd> : toggle sidebar <br>
+<kbd>Ctrl</kbd>+<kbd>,</kbd> : next tab <br>
+<kbd>Ctrl</kbd>+<kbd>;</kbd> : previous tab <br>
+<kbd>Ctrl</kbd>+<kbd>:</kbd> : command palette <br>
+<kbd>Ctrl</kbd>+<kbd>*</kbd> : create new file <br>
+<kbd>Ctrl</kbd>+<kbd>/</kbd> : delete open file <br>
 
 ## Build it
 
