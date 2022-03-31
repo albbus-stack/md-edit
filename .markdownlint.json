@@ -1,6 +1,6 @@
 {
   "no-inline-html": {
-    "allowed_elements": [ "kbd" ]
+    "allowed_elements": [ "kbd", "br" ]
   },
   "line-length": false,
   "MD001": false
