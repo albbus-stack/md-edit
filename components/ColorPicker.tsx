@@ -1,4 +1,5 @@
-import { HexColorPicker } from "react-colorful";
+import { useState } from "react";
+import { HexColorPicker, RgbColor } from "react-colorful";
 
 interface Props {
   colorState: string;
@@ -15,6 +16,8 @@ const ColorPicker: React.FC<Props> = ({
   isPickerOpen,
   setPickerOpen,
 }) => {
+  const [internalColor, setInternalColor] = useState(colorState);
+
   return (
     <div className="colorSelectorLine">
       {description}
@@ -27,13 +30,23 @@ const ColorPicker: React.FC<Props> = ({
         }}
       ></div>
       {isPickerOpen ? (
-        <HexColorPicker
-          className="colorPicker"
-          color={colorState}
-          onChange={(newColor) => {
-            setColorState(newColor);
-          }}
-        />
+        <>
+          <HexColorPicker
+            className="colorPicker"
+            color={colorState}
+            onChange={(newColor) => {
+              setInternalColor(newColor);
+            }}
+          />
+          <div
+            className="confirmColorPicker"
+            onClick={() => {
+              setColorState(internalColor);
+            }}
+          >
+            ✓
+          </div>
+        </>
       ) : (
         <></>
       )}

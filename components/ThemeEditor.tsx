@@ -22,13 +22,11 @@ const ThemeEditor: React.FC<Props> = ({ isOpen, setOpen }) => {
   const [isAccentPickerOpen, setAccentPickerOpen] = useState(false);
 
   useEffect(() => {
-    return () => {
-      changeColors({
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        accentColor: accentColor,
-      });
-    };
+    changeColors({
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+      accentColor: accentColor,
+    });
   }, [backgroundColor, textColor, accentColor]);
 
   useEffect(() => {
