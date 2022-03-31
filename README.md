@@ -6,6 +6,15 @@
 
 A simple WYSIWYG browser markdown editor that persists in your local storage, currently live at <https://md-edit-jet.vercel.app/>.
 
+## Keyboard Shortcuts
+
+<kbd>Ctrl</kbd>+<kbd>.</kbd> : toggle sidebar
+<kbd>Ctrl</kbd>+<kbd>,</kbd> : next tab
+<kbd>Ctrl</kbd>+<kbd>;</kbd> : previous tab
+<kbd>Ctrl</kbd>+<kbd>:</kbd> : command palette
+<kbd>Ctrl</kbd>+<kbd>*</kbd> : create new file
+<kbd>Ctrl</kbd>+<kbd>/</kbd> : delete open file
+
 ## Build it
 
 ###### Requirements
@@ -27,5 +36,3 @@ A simple WYSIWYG browser markdown editor that persists in your local storage, cu
 ## TODOS
 
 * Add a theme manager.
-
-* Add shortcut documentation on site and here (ctrl+. toggle sidebar, ctrl+, next tab, ctrl+; previous tab, ctrl+: palette, ctrl+* new file, ctrl+/ remove file).
