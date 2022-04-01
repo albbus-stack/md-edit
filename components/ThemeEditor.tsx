@@ -58,7 +58,7 @@ const ThemeEditor: React.FC<Props> = ({ isOpen, setOpen }) => {
           setOpen((prevState) => !prevState);
         }}
       >
-        🞩
+        ✕
       </div>
       <ColorPicker
         colorState={backgroundColor}

@@ -11,6 +11,7 @@ body {
   --text-color: white;
   --active-file-color: #003b49;
   background: var(--background-color);
+  scrollbar-width: thin;
 }
 
 * {
@@ -26,7 +27,6 @@ input[type="reset"] {
   padding: 0;
   font: inherit;
   cursor: pointer;
-  outline: inherit;
 }
 
 .sc-bdvvtL {
@@ -34,6 +34,7 @@ input[type="reset"] {
   width: 90vw;
   z-index: 0;
   margin-top: 1rem;
+  margin-bottom: 4rem;
 }
 
 .sc-dJjYzT {
@@ -83,7 +84,7 @@ input[type="text"] {
   color: inherit;
   border: none;
   cursor: text;
-  outline: 0px solid rgb(189, 189, 189);
+  border: 0px solid rgb(189, 189, 189);
   padding: 0.5rem;
   border-radius: 3px;
   padding-left: 1rem;
@@ -107,19 +108,22 @@ input[type="text"] {
 
 .tab {
   margin-left: 0.5rem;
-  margin-top: 0.3rem;
   padding: 0.1rem 0.5rem 0.4rem 0.5rem;
   display: flex;
   font-style: italic;
   position: relative;
-  align-self: flex-end;
+  align-self: flex-start;
   border: 1px solid rgb(66, 74, 87);
   border-bottom: 0;
   color: rgba(168, 167, 167, 0.664);
 }
 
 .firstTab {
-  margin-left: 1.5rem;
+  margin-left: 1rem;
+}
+
+.lastTab {
+  margin-right: 1rem;
 }
 
 .activeTab {
@@ -255,6 +259,35 @@ input[type="text"] {
   height: 7vh;
   color: #cccc;
   border-bottom: 1px solid rgb(66, 74, 87);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.topBar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabbedFiles {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+  width: 100%;
+  height: 7vh;
+  color: #cccc;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.tabbedFiles, .tab {
+  transform: rotateX(180deg);
 }
 
 .sideBar {
@@ -286,9 +319,12 @@ input[type="text"] {
 
 .openSideBar {
   position: absolute;
-  top: 0.9rem;
-  left: -2.5rem;
+  top: 7vh;
+  left: 0;
+  transform: translateX(-100%);
   transition: transform 500ms;
+  height: 7vh;
+  width: 7vh;
 }
 
 .deleteButton {
@@ -368,7 +404,7 @@ input[type="text"] {
   height: 3rem;
   opacity: 1;
   transition: opacity 500ms;
-  outline: 1px solid rgb(66, 74, 87);
+  border: 1px solid rgb(66, 74, 87);
 }
 
 .palette > form {
@@ -378,7 +414,7 @@ input[type="text"] {
 }
 
 input[name="palette"] {
-  outline: none;
+  border: none;
   color: #cccc;
   font-size: 1rem;
   cursor: text;
@@ -399,7 +435,7 @@ input[name="palette"] {
 .suggestion {
   color: #cccc;
   padding: 0.5rem;
-  outline: 1px solid rgb(66, 74, 87);
+  border: 1px solid rgb(66, 74, 87);
   cursor: pointer;
 }
 
@@ -417,7 +453,7 @@ input[name="palette"] {
   padding: 0.5rem;
   padding-top: 0.2rem;
   opacity: 1;
-  outline: 1px solid rgb(66, 74, 87);
+  border: 1px solid rgb(66, 74, 87);
 }
 
 .react-colorful__hue-pointer {
@@ -440,7 +476,7 @@ input[name="palette"] {
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  outline: 2px solid white;
+  border: 2px solid white;
 }
 
 .colorCircle::after {
@@ -467,7 +503,7 @@ input[name="palette"] {
 .colorPicker {
   position: absolute !important;
   left: 110%;
-  top: 0;
+  top: -2%;
   width: 20vw !important;
   min-width: 175px;
   height: 23vh !important;
@@ -477,8 +513,9 @@ input[name="palette"] {
 .closeThemeEditor {
   color: var(--text-color);
   align-self: flex-end;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   padding-bottom: 0.5rem;
+  padding-top: 0.1rem;
   cursor: pointer;
 }
 
@@ -489,11 +526,11 @@ input[name="palette"] {
   background-color: black;
   color: white;
   border-radius: 50%;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   z-index: 3;
-  outline: 2px solid white;
+  border: 2px solid white;
   cursor: pointer;
 }

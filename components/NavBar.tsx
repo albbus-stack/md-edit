@@ -79,45 +79,48 @@ const NavBar: React.FC = () => {
       />
       <ThemeEditor isOpen={themeEditorOpen} setOpen={setThemeEditorOpen} />
       <div className="topBar">
-        {tabbedFiles.map((file, index) => {
-          const divClass =
-            "tab " +
-            (file.fileName === activeFile ? " activeTab" : "") +
-            (index === 0 ? " firstTab" : "");
-          return (
-            <div
-              id="fileContainer"
-              className={divClass}
-              key={file.fileName + "tab"}
-              onClick={() => {
-                switchToFile(file.fileName);
-              }}
-            >
-              {file.fileName}
-              <button
-                className="removeFromTabsButton"
-                key={file.fileName + "removeFromTabs"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFromTabs(file.fileName);
-                  if (file.fileName === activeFile) {
-                    let switchIndex: number = tabbedFiles.length - 1;
-                    for (let i = 0; i < tabbedFiles.length; i++) {
-                      if (
-                        tabbedFiles[i].fileName === file.fileName &&
-                        i === tabbedFiles.length - 1
-                      )
-                        switchIndex = tabbedFiles.length - 2;
-                    }
-                    switchToFile(tabbedFiles[switchIndex].fileName);
-                  }
+        <div className="tabbedFiles">
+          {tabbedFiles.map((file, index) => {
+            const divClass =
+              "tab " +
+              (file.fileName === activeFile ? " activeTab" : "") +
+              (index === 0 ? " firstTab" : "") +
+              (index === tabbedFiles.length - 1 ? " lastTab" : "");
+            return (
+              <div
+                id="fileContainer"
+                className={divClass}
+                key={file.fileName + "tab"}
+                onClick={() => {
+                  switchToFile(file.fileName);
                 }}
               >
-                &#10005;
-              </button>
-            </div>
-          );
-        })}
+                {file.fileName}
+                <button
+                  className="removeFromTabsButton"
+                  key={file.fileName + "removeFromTabs"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFromTabs(file.fileName);
+                    if (file.fileName === activeFile) {
+                      let switchIndex: number = tabbedFiles.length - 1;
+                      for (let i = 0; i < tabbedFiles.length; i++) {
+                        if (
+                          tabbedFiles[i].fileName === file.fileName &&
+                          i === tabbedFiles.length - 1
+                        )
+                          switchIndex = tabbedFiles.length - 2;
+                      }
+                      switchToFile(tabbedFiles[switchIndex].fileName);
+                    }
+                  }}
+                >
+                  &#10005;
+                </button>
+              </div>
+            );
+          })}
+        </div>
         <div className="spacer"></div>
         <SideBar
           isOpen={isSidebarOpen}
