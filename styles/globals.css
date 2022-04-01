@@ -33,7 +33,7 @@ input[type="reset"] {
   height: 100%;
   width: 90vw;
   z-index: 0;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-bottom: 4rem;
 }
 
@@ -82,9 +82,9 @@ input[type="submit"] {
 input[type="text"] {
   background: none;
   color: inherit;
-  border: none;
+  border:none;
   cursor: text;
-  border: 0px solid rgb(189, 189, 189);
+  outline: 0px solid rgb(189, 189, 189);
   padding: 0.5rem;
   border-radius: 3px;
   padding-left: 1rem;
@@ -136,7 +136,7 @@ input[type="text"] {
   position: absolute;
   width: 100%;
   height: 10%;
-  bottom: -5%;
+  top: 95%;
   left: 0;
   background-color: var(--background-color);
 }
@@ -259,14 +259,6 @@ input[type="text"] {
   height: 7vh;
   color: #cccc;
   border-bottom: 1px solid rgb(66, 74, 87);
-  overflow-x: auto;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: thin;
-}
-
-.topBar::-webkit-scrollbar {
-  display: none;
 }
 
 .tabbedFiles {
@@ -281,9 +273,10 @@ input[type="text"] {
   height: 7vh;
   color: #cccc;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   -ms-overflow-style: none;
   scrollbar-width: thin;
+  padding-top: calc(7vh - 100%);
 }
 
 .tabbedFiles, .tab {
