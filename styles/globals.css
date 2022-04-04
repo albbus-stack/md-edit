@@ -250,6 +250,7 @@ input[type="text"] {
 
 .field {
   margin-left: 1rem;
+  padding-right: 1rem;
 }
 
 .topBar {

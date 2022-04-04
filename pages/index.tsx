@@ -5,6 +5,7 @@ import editorTheme from "../lib/editorTheme";
 import dynamic from "next/dynamic";
 import { useFilesContext } from "../components/FileProvider";
 import { useThemeContext } from "../components/ThemeManager";
+import Head from "next/head";
 
 const NavBar = dynamic(() => import("../components/NavBar"), {
   ssr: false,
@@ -46,28 +47,33 @@ const Home: NextPage = () => {
   }, [theme]);
 
   return (
-    <div className="container">
-      <NavBar></NavBar>
-      <Editor
-        theme={{
-          ...editorTheme,
-          background: theme.backgroundColor,
-          text: theme.textColor,
-        }}
-        onChange={(value) => {
-          setText(value);
-          localStorage.setItem(activeFile, text);
-          modifyFile(activeFile, text);
-        }}
-        value={newText}
-        autoFocus={true}
-        onSave={() => {
-          localStorage.setItem(activeFile, text);
-          modifyFile(activeFile, text);
-        }}
-        className="field"
-      />
-    </div>
+    <>
+      <Head>
+        <meta name="theme-color" content={theme.backgroundColor} />
+      </Head>
+      <div className="container">
+        <NavBar></NavBar>
+        <Editor
+          theme={{
+            ...editorTheme,
+            background: theme.backgroundColor,
+            text: theme.textColor,
+          }}
+          onChange={(value) => {
+            setText(value);
+            localStorage.setItem(activeFile, text);
+            modifyFile(activeFile, text);
+          }}
+          value={newText}
+          autoFocus={true}
+          onSave={() => {
+            localStorage.setItem(activeFile, text);
+            modifyFile(activeFile, text);
+          }}
+          className="field"
+        />
+      </div>
+    </>
   );
 };
 
