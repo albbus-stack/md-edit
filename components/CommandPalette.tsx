@@ -27,7 +27,6 @@ const CommandPalette: React.FC<Props> = ({
 
   const [isPaletteOpen, setPaletteOpen] = useState(false);
   const [toBeSelected, setToBeSelected] = useState(true);
-  const [isSecondInputOpen, setSecondInputOpen] = useState(false);
   const [paletteInput, setPaletteInput] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -43,13 +42,13 @@ const CommandPalette: React.FC<Props> = ({
       );
 
       if (secondInputType !== "") {
+        setFileNameInput(secondInputType);
         setSidebarOpen(true);
         if (secondInputType === "new fast") {
           setFileNameInputValue(".md");
         } else if (secondInputType === "edit fast") {
           setFileNameInputValue(activeFile ?? "");
         }
-        setFileNameInput(secondInputType);
       }
     } else if (searchSuggestions[selectedIndex].value == "Open theme editor") {
       setThemeEditorOpen((prevState) => !prevState);
@@ -78,9 +77,9 @@ const CommandPalette: React.FC<Props> = ({
           return (prevState + 1) % searchSuggestions.length;
         });
       } else if (e.ctrlKey && e.key === "*") {
+        setFileNameInputValue(".md");
         setSidebarOpen(true);
         setFileNameInput("add");
-        setFileNameInputValue(".md");
       } else if (e.ctrlKey && e.key === "/") {
         executeDispatch(Actions.REMOVE_FILE, activeFile);
       }
