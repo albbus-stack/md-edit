@@ -31,6 +31,14 @@ const ColorPicker: React.FC<Props> = ({
       ></div>
       {isPickerOpen ? (
         <>
+          <input
+            className="colorInput"
+            type="text"
+            value={internalColor}
+            onChange={(value) => {
+              setInternalColor(value.target.value);
+            }}
+          />
           <HexColorPicker
             className="colorPicker"
             color={colorState}
