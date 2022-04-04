@@ -44,6 +44,7 @@ const Home: NextPage = () => {
     );
     document.body.style.setProperty("--text-color", theme.textColor);
     document.body.style.setProperty("--active-file-color", theme.accentColor);
+    document.body.style.setProperty("--border-color", theme.borderColor);
   }, [theme]);
 
   return (

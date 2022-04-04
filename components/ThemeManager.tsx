@@ -4,6 +4,7 @@ interface Theme {
   backgroundColor: string;
   textColor: string;
   accentColor: string;
+  borderColor: string;
 }
 
 enum Actions {
@@ -21,6 +22,7 @@ interface Context {
     backgroundColor: string;
     textColor: string;
     accentColor: string;
+    borderColor: string;
   }) => void;
 }
 
@@ -33,6 +35,7 @@ const initialState: State = {
     backgroundColor: "#002b36",
     textColor: "white",
     accentColor: "#003b49",
+    borderColor: "#4A4257",
   },
 };
 
@@ -41,10 +44,12 @@ function initializeState(): State {
   let backgroundColor: string = "";
   let textColor: string = "";
   let accentColor: string = "";
+  let borderColor: string = "";
   if (typeof window !== "undefined") {
-    themeString = localStorage.getItem("theme") ?? "#002b36,white,#003b49";
+    themeString =
+      localStorage.getItem("theme") ?? "#002b36,white,#003b49,#4A4257";
     if (themeString === "#002b36,white,#003b49") {
-      localStorage.setItem("theme", "#002b36,white,#003b49");
+      localStorage.setItem("theme", "#002b36,white,#003b49,#4A4257");
     }
     [backgroundColor, textColor, accentColor] = themeString.split(",");
   }
@@ -55,6 +60,7 @@ function initializeState(): State {
         backgroundColor: backgroundColor,
         textColor: textColor,
         accentColor: accentColor,
+        borderColor: borderColor,
       },
     };
   }
@@ -67,12 +73,17 @@ const reducer = (state: State, action: Action): State => {
       const background: string = action.theme.backgroundColor;
       const text: string = action.theme.textColor;
       const accent: string = action.theme.accentColor;
-      localStorage.setItem("theme", background + "," + text + "," + accent);
+      const border: string = action.theme.borderColor;
+      localStorage.setItem(
+        "theme",
+        background + "," + text + "," + accent + "," + border
+      );
       return {
         theme: {
           backgroundColor: background,
           textColor: text,
           accentColor: accent,
+          borderColor: border,
         },
       };
     }
