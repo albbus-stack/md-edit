@@ -404,7 +404,7 @@ input[type="text"] {
   height: 3rem;
   opacity: 1;
   transition: opacity 500ms;
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
 }
 
 .palette > form {
@@ -454,6 +454,7 @@ input[name="palette"] {
   padding-top: 0.2rem;
   opacity: 1;
   border: 1px solid var(--border-color);
+  background: var(--background-color);
 }
 
 .react-colorful__hue-pointer {

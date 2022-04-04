@@ -33,7 +33,10 @@ const SideBar: React.FC<Props> = ({
     addToTabs,
   } = useFilesContext();
 
-  const { width, enableResize } = useResize({ minWidth: 200 });
+  const { width, enableResize } = useResize({
+    minWidth: 200,
+    maxWidth: window.innerWidth - 200,
+  });
 
   const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
     if (e.key === "." && e.ctrlKey) {

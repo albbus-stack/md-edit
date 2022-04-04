@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   minWidth: number;
+  maxWidth: number;
 }
 
 interface ReturnProps {
@@ -9,7 +10,7 @@ interface ReturnProps {
   enableResize: () => void;
 }
 
-const useResize = ({ minWidth }: Props): ReturnProps => {
+const useResize = ({ minWidth, maxWidth }: Props): ReturnProps => {
   const [isResizing, setIsResizing] = useState(false);
   const [width, setWidth] = useState(minWidth);
 
@@ -25,7 +26,7 @@ const useResize = ({ minWidth }: Props): ReturnProps => {
     (e: MouseEvent) => {
       if (isResizing) {
         const newWidth = window.innerWidth - e.clientX + 10;
-        if (newWidth >= minWidth) {
+        if (newWidth >= minWidth && newWidth <= maxWidth) {
           setWidth(newWidth);
         }
       }
