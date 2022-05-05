@@ -4,7 +4,11 @@ import SideBar from "./SideBar";
 import CommandPalette from "./CommandPalette";
 import ThemeEditor from "./ThemeEditor";
 
-const NavBar: React.FC = () => {
+interface Props {
+  currentText: string;
+}
+
+const NavBar: React.FC<Props> = ({ currentText }) => {
   const { activeFile, files, tabbedFiles, switchToFile, removeFromTabs } =
     useFilesContext();
 
@@ -131,6 +135,7 @@ const NavBar: React.FC = () => {
           setFileNameInputValue={setFileNameInputValue}
           themeEditorOpen={themeEditorOpen}
           setThemeEditorOpen={setThemeEditorOpen}
+          currentText={currentText}
         />
       </div>
     </>

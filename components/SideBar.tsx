@@ -11,6 +11,7 @@ interface Props {
   setFileNameInputValue: React.Dispatch<React.SetStateAction<string>>;
   themeEditorOpen: boolean;
   setThemeEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  currentText: string;
 }
 
 const SideBar: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const SideBar: React.FC<Props> = ({
   setFileNameInputValue,
   themeEditorOpen,
   setThemeEditorOpen,
+  currentText,
 }) => {
   const {
     activeFile,
@@ -59,6 +61,17 @@ const SideBar: React.FC<Props> = ({
 
   const sideBarClass = "sideBar" + (isOpen ? " visible" : "");
 
+  const downloadFile = (filename: string, text: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([text.replaceAll("\\\n", "").trim() + "\n"], {
+      type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = filename;
+    document.body.appendChild(element);
+    element.click();
+  };
+
   return (
     <>
       <div className={sideBarClass} style={{ width: width }}>
@@ -91,6 +104,15 @@ const SideBar: React.FC<Props> = ({
                 }}
               >
                 &#65291;
+              </button>
+
+              <button
+                className="exportButton"
+                onClick={() => {
+                  downloadFile(activeFile, currentText);
+                }}
+              >
+                &#8659;
               </button>
 
               <button
