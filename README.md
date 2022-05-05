@@ -35,4 +35,4 @@ A simple WYSIWYG browser markdown editor that persists in your local storage, cu
 
 ## TODOS
 
-* Add a theme manager.
+* Add customizable keybindings.
