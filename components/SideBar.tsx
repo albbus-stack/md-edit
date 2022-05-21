@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useResize from "../lib/useResize";
 import { useFilesContext } from "./FileProvider";
-
+import UploadPopup from "../components/UploadPopup";
 interface Props {
   isOpen: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +12,7 @@ interface Props {
   themeEditorOpen: boolean;
   setThemeEditorOpen: React.Dispatch<React.SetStateAction<boolean>>;
   currentText: string;
+  setCurrentText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SideBar: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const SideBar: React.FC<Props> = ({
   themeEditorOpen,
   setThemeEditorOpen,
   currentText,
+  setCurrentText,
 }) => {
   const {
     activeFile,
@@ -39,6 +41,8 @@ const SideBar: React.FC<Props> = ({
     minWidth: 200,
     maxWidth: window.innerWidth - 200,
   });
+
+  const [isUploadOpen, setUploadOpen] = useState(false);
 
   const keyBindingsFunction = useCallback((e: KeyboardEvent) => {
     if (e.key === "." && e.ctrlKey) {
@@ -104,15 +108,6 @@ const SideBar: React.FC<Props> = ({
                 }}
               >
                 &#65291;
-              </button>
-
-              <button
-                className="exportButton"
-                onClick={() => {
-                  downloadFile(activeFile, currentText);
-                }}
-              >
-                &#8659;
               </button>
 
               <button
@@ -210,6 +205,26 @@ const SideBar: React.FC<Props> = ({
             </div>
           );
         })}
+        <div className="spacer"></div>
+        {isUploadOpen && <UploadPopup setUploadOpen={setUploadOpen} />}
+        <div className="row h-1">
+          <button
+            className="exportButton"
+            onClick={() => {
+              downloadFile(activeFile, currentText);
+            }}
+          >
+            &#8659;
+          </button>
+          <button
+            className="importButton"
+            onClick={() => {
+              setUploadOpen((prevState) => !prevState);
+            }}
+          >
+            &#8657;
+          </button>
+        </div>
       </div>
     </>
   );

@@ -27,7 +27,7 @@ interface Context {
   activeFile: string;
   files: File[];
   tabbedFiles: File[];
-  addNewFile: (fileName: string) => void;
+  addNewFile: (fileName: string, content?: string) => void;
   removeFile: (fileName: string) => void;
   renameFile: (fileName: string, newFileName: string) => void;
   switchToFile: (fileName: string) => void;
@@ -106,14 +106,17 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case Actions.ADD_NEW_FILE: {
       const fileName: string = action.fileName;
-      localStorage.setItem(fileName, "# " + fileName.toString());
+      const content = action.content
+        ? action.content
+        : "# " + fileName.toString();
+      localStorage.setItem(fileName, content);
       return {
         activeFile: fileName,
         files: [
           ...state.files,
           {
             fileName: fileName,
-            content: "# " + fileName.toString(),
+            content: content,
           },
         ],
         tabbedFiles: state.tabbedFiles,
@@ -260,8 +263,8 @@ const FileProvider: React.FC = (props) => {
     activeFile: state.activeFile,
     files: state.files,
     tabbedFiles: state.tabbedFiles,
-    addNewFile: (fileName: string) => {
-      dispatch({ type: Actions.ADD_NEW_FILE, fileName });
+    addNewFile: (fileName: string, content?: string) => {
+      dispatch({ type: Actions.ADD_NEW_FILE, fileName, content });
     },
     removeFile: (fileName: string) => {
       dispatch({ type: Actions.REMOVE_FILE, fileName });

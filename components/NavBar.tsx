@@ -6,9 +6,10 @@ import ThemeEditor from "./ThemeEditor";
 
 interface Props {
   currentText: string;
+  setCurrentText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NavBar: React.FC<Props> = ({ currentText }) => {
+const NavBar: React.FC<Props> = ({ currentText, setCurrentText }) => {
   const { activeFile, files, tabbedFiles, switchToFile, removeFromTabs } =
     useFilesContext();
 
@@ -136,6 +137,7 @@ const NavBar: React.FC<Props> = ({ currentText }) => {
           themeEditorOpen={themeEditorOpen}
           setThemeEditorOpen={setThemeEditorOpen}
           currentText={currentText}
+          setCurrentText={setCurrentText}
         />
       </div>
     </>

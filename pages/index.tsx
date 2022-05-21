@@ -53,7 +53,7 @@ const Home: NextPage = () => {
         <meta name="theme-color" content={theme.backgroundColor} />
       </Head>
       <div className="container">
-        <NavBar currentText={text}></NavBar>
+        <NavBar currentText={text} setCurrentText={setText}></NavBar>
         <Editor
           theme={{
             ...editorTheme,

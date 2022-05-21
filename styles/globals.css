@@ -160,10 +160,31 @@ input[type="text"] {
   font-size: 1rem;
 }
 
-.exportButton {
+.exportButton,
+.importButton {
   position: relative;
   padding: 0.6rem;
   font-size: 1.4rem;
+}
+
+.importButton {
+  margin-left: 1rem;
+}
+
+.uploadButton {
+  font-size: 1.05rem;
+  border: 2px solid grey;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+}
+
+.uploadButton:hover {
+  color: white;
+  border-color: white;
+}
+
+.buttonRow {
+  height: 2rem;
 }
 
 .themeButton {
@@ -203,6 +224,22 @@ input[type="text"] {
   z-index: 2;
 }
 
+.importButton:hover::after {
+  content: "Import file";
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: black;
+  position: absolute;
+  height: 21px;
+  width: 250%;
+  top: -30%;
+  left: -400%;
+  transform: translateX(130%);
+  border-radius: 3px;
+  background: white;
+  z-index: 2;
+}
+
 .exportButton:hover::after {
   content: "Download file";
   font-size: 0.9rem;
@@ -211,8 +248,8 @@ input[type="text"] {
   position: absolute;
   height: 21px;
   width: 320%;
-  top: 95%;
-  left: -500%;
+  top: -30%;
+  left: -520%;
   transform: translateX(130%);
   border-radius: 3px;
   background: white;
